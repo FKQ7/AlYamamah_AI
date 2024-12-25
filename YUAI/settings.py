@@ -43,7 +43,18 @@ INSTALLED_APPS = [
     'core',
     'event',
     'chat',
+    'tailwind',
+    'theme',
 ]
+
+
+# TAILWIND
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+TAILWIND_APP_NAME = 'theme'
+NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
+# TAILWIND
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -1,25 +1,16 @@
+{% load static tailwind_tags %}
 <!doctype html >
 <html data-theme="light" lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"></script>
+  {% tailwind_css %}
+
   <style>
   .disable-links {
       pointer-events: none;
   }
   </style>
-  <script>
-    tailwind.config = {
-        darkMode: 'class', // Use 'class' for explicit control
-    };
-
-    // JavaScript to handle the mobile menu toggle
-    function toggleMenu() {
-      const mobileMenu = document.getElementById("mobile-menu");
-      mobileMenu.classList.toggle("hidden");
-    }
-  </script>
 </head>
 <body>
   <div class="">
@@ -121,7 +112,7 @@
                         <li><a href="/events" class=" text-gray-800 hover:text-gray-900">Event Calendar</a></li>
                         <li><a href="#" class=" text-gray-800 hover:text-gray-900">Chat with YU AI</a></li>
                         <li><a href="#" class=" text-gray-800 hover:text-gray-900">interactive map</a></li>
-                        <li><a href="fayezs.site" class=" text-gray-800 hover:text-gray-900">Developer Site</a></li>
+                        <li><a href="https://www.fayezs.site" class=" text-gray-800 hover:text-gray-900">Developer Site</a></li>
                     </ul>
                     <div class="flex space-x-10 justify-center items-center mb-14">
                         <a href="https://x.com/Fayez_Alshwayya" class="block  text-gray-900 transition-all duration-500 hover:text-indigo-600 ">
@@ -136,7 +127,7 @@
                                 
                         </a>
                     </div>
-                    <span class="text-lg text-gray-500 text-center block">©<a href="https://fayezs.site/">Fayez Al-Shwayya</a> 2024, All rights reserved.</span>
+                    <span class="text-lg text-gray-500 text-center block">©<a href="https://www.fayezs.site">Fayez Al-Shwayya</a> 2024, All rights reserved.</span>
             </div>
         </div>
     </footer>

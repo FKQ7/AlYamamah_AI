@@ -1,4 +1,4 @@
-{% extends 'core/base.html' %}
+{% extends 'base.html' %}
 {% block content %}
 <section class="relative bg-stone-50">
     <!-- Background decorations -->
@@ -11,7 +11,8 @@
                 <!-- Upcoming Events Section -->
                 <div class="col-span-12 xl:col-span-5">
                     <h2 class="font-manrope text-3xl leading-tight text-gray-900 mb-1.5">Upcoming Events</h2>
-                    <p class="text-lg font-normal text-gray-600 mb-8">Don’t miss schedule</p>
+                    <p class="text-lg font-normal text-gray-600">Don’t miss schedule</p>
+                    <p class="text-lg font-bold text-red-600 mb-8">NOTE THIS IS A BETA VERSION OF THE CALENDAR IF YOU FACE ANY PROBLEMS CONTACT US</p>
                     <div class="flex gap-5 flex-col" id="event-list">
                         <!-- Events dynamically rendered -->
                         {% for event in events %}
