@@ -1,0 +1,37 @@
+{% extends "core/base.html" %}
+{% block content %}
+      <section>
+        <div class="bg-white py-24 sm:py-32">
+          <div class="container mx-auto px-6 lg:px-8">
+            <h1 class="text-5xl">All announced Al-Yamamah News/Events</h1>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="bg-white py- sm:py-">
+          <div class="container mx-auto px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+              <!-- START CARD -->
+              {% for event in events %}
+              <div class="card bg-slate-100 rounded-lg overflow-hidden shadow-lg">
+                <img class="w-full object-cover rounded-t" src="{{ event.img.url }}" alt="IMG" />
+                <div class="p-6">
+                  <h2 class="font-bold text-xl mb-2">{{ event.title }}</h2>
+                  <p class="text-gray-700 text-base">{{ event.content }}</p>
+                </div>
+                <div class="px-6">
+                  <span class="text-lg text-gray-500">Date Announced: {{ event.date_start }} Till {{ event.date_end }}</span>
+                </div>
+                <div class="px-6 pt-4 pb-2">
+                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{{ event.tag_1 }}</span>
+                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{{ event.tag_2 }}</span>
+                </div>
+              </div>
+            {% endfor %}
+              <!-- ENDCARD -->
+
+            </div>
+          </div>
+        </div>
+      </section>
+{% endblock content %}

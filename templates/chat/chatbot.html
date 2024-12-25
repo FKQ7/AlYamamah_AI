@@ -1,0 +1,109 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<section>
+  <div class="bg-white py-24 sm:py-32">
+    <div class="container mx-auto px-6 lg:px-8">
+
+      <div class="">
+        <div>
+          <h1 class="text-5xl">Yamamah AI</h1>
+          <p class="pt-4">Ask our AI anything you want about Al-Yamamah, Events, News, and Announcements</p>
+        </div>
+
+        <div class="messages-list">
+                
+        <!-- AI Message -->
+        <div class="flex items-start gap-2.5 pt-8">
+          <div class="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
+            <div class="flex items-center space-x-2 rtl:space-x-reverse">
+              <span class="text-sm font-semibold text-gray-900 dark:text-white">Yamamah AI</span>
+            </div>
+            <p class="text-sm font-normal text-gray-900 dark:text-white">Hello I'm Yamamah AI, how can I help you today?</p>
+            <p class="text-sm font-normal py-1 text-gray-900 dark:text-white">Some FAQ's I could answer</p>
+
+            <ul class="text-sm font-bold text-gray-900 dark:text-white">
+              <li>
+                - Ask about directions 
+              </li>
+              <li>
+                - heloo
+              </li>
+            </ul>
+          </div>
+        </div>
+      
+        <!-- User Message -->
+
+      </div>
+      <form class="message-form">
+        {%csrf_token%}
+        <div class="input-group">
+          <label for="large-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Large input</label>
+          <input type="text" id="large-input" class="form-control message-input block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          <div class="input-group-append">
+            <button type="submit" class="btn btn-primary btn-send">Send</button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+
+  </div>
+</section>
+<script>
+  const messagesList = document.querySelector('.messages-list');
+  const messageForm = document.querySelector('.message-form');
+  const messageInput = document.querySelector('.message-input');
+
+  messageForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const message = messageInput.value.trim();
+    if (message.length === 0) {
+      return;
+    }
+
+    const messageItem = document.createElement('div');
+    messageItem.classList.add('message', 'sent');
+    messageItem.innerHTML = `
+        <div class="flex items-end justify-end gap-2.5 pt-4">
+          <div class="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-blue-500 text-white rounded-e-xl rounded-es-xl">
+            <div class="flex items-center space-x-2 rtl:space-x-reverse">
+              <span class="text-sm font-semibold">You</span>
+            </div>
+            <p class="text-sm font-normal py-2.5">${message}</p>
+          </div>
+        </div>`;
+    messagesList.appendChild(messageItem);
+
+    messageInput.value = '';
+
+    fetch('', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        'csrfmiddlewaretoken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+        'message': message
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        const response = data.response;
+        const messageItem = document.createElement('div');
+        messageItem.classList.add('message', 'received');
+        messageItem.innerHTML = `
+        <div class="flex items-start gap-2.5 pt-8">
+          <div class="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
+            <div class="flex items-center space-x-2 rtl:space-x-reverse">
+              <span class="text-sm font-semibold text-gray-900 dark:text-white">Yamamah AI</span>
+            </div>
+            <p class="text-sm font-normal py-2.5 text-gray-900 dark:text-white">${response}.</p>
+          </div>
+        </div>
+          `;
+        messagesList.appendChild(messageItem);
+      });
+  });
+
+</script>
+{% endblock %}
