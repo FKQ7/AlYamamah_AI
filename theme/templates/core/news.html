@@ -3,35 +3,83 @@
       <section>
         <div class="bg-white py-24 sm:py-32">
           <div class="container mx-auto px-6 lg:px-8">
-            <h1 class="text-5xl">All announced Al-Yamamah News/Events</h1>
+            <h1 class="text-4xl font-bold">All announced Al-Yamamah News/Events</h1>
+            <p class="pt-4 text-lg font-semibold" style="color:#f68938">Explore the latest updates and activities at Al-Yamamah.</p>
           </div>
         </div>
       </section>
       <section>
         <div class="bg-white py- sm:py-">
           <div class="container mx-auto px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-              <!-- START CARD -->
+            <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-10">
               {% for event in events %}
-              <div class="card bg-slate-100 rounded-lg overflow-hidden shadow-lg">
-                <img class="w-full object-cover rounded-t" src="{{ event.img.url }}" alt="IMG" />
-                <div class="p-6">
-                  <h2 class="font-bold text-xl mb-2">{{ event.title }}</h2>
-                  <p class="text-gray-700 text-base">{{ event.content }}</p>
+              <article class="group grid rounded-md max-w-full grid-cols-1 md:grid-cols-8 overflow-hidden border border-neutral-300 bg-neutral-50 text-neutral-600 ">
+                
+                <!-- image -->
+                <div class="col-span-3 overflow-hidden">
+                    <img src="{{ event.img.url }}" class="h-52 md:h-72 w-full object-cover transition duration-700 ease-out group-hover:scale-105" alt="a men wearing VR goggles" />
                 </div>
-                <div class="px-6">
-                  <span class="text-lg text-gray-500">Date Announced: {{ event.date_start }} Till {{ event.date_end }}</span>
+                <!-- body -->
+                <div class="flex flex-col justify-center p-6 col-span-5">
+                    <small class="mb-4 font-medium">Artificial Intelligence</small>
+                    <h3 class="text-balance text-xl font-bold text-neutral-900 lg:text-2xl " aria-describedby="articleDescription">{{ event.title }}</h3>
+                    <p id="articleDescription" class="my-4 max-w-lg text-pretty text-sm">
+                      {{ event.content }}
+                    </p>
+                    <p class="text- text-orange-400">Start Date: {{ event.date_start }} | End Data: {{ event.date_end }}</p>
                 </div>
-                <div class="px-6 pt-4 pb-2">
-                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{{ event.tag_1 }}</span>
-                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{{ event.tag_2 }}</span>
-                </div>
-              </div>
+            </article>
             {% endfor %}
-              <!-- ENDCARD -->
+            <article class="group grid rounded-md max-w-full grid-cols-1 md:grid-cols-8 overflow-hidden border border-neutral-300 bg-neutral-50 text-neutral-600 ">
+                
+              <!-- image -->
+              <div class="col-span-3 overflow-hidden">
+                  <img src="https://penguinui.s3.amazonaws.com/component-assets/card-img-4.webp" class="h-52 md:h-72 w-full object-cover transition duration-700 ease-out group-hover:scale-105" alt="a men wearing VR goggles" />
+              </div>
+              <!-- body -->
+              <div class="flex flex-col justify-center p-6 col-span-5">
+                  <small class="mb-4 font-medium">Artificial Intelligence</small>
+                  <h3 class="text-balance text-xl font-bold text-neutral-900 lg:text-2xl " aria-describedby="articleDescription">AI-Powered VR Goggles Redefine Reality: Augmented Vision for Al</h3>
+                  <p id="articleDescription" class="my-4 max-w-lg text-pretty text-sm">
+                      Experience the next level of augmented reality with smart
+                      goggles integrating cutting-edge AI for seamless interaction
+                      with the world around you.
+                  </p>
+                  <p class="text- text-orange-400">Start Date: {{ event.date_start }} | End Data: {{ event.date_end }}</p>
 
+              </div>
+          </article>
+              <!-- ENDCARD -->
+      
             </div>
           </div>
         </div>
       </section>
 {% endblock content %}
+<section>
+  <div class="bg-white py- sm:py-">
+    <div class="container mx-auto px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-10">
+        <!-- START CARD -->
+        {% for event in events %}
+        <div class="card bg-slate-100 rounded-lg overflow-hidden shadow-lg">
+          <img class="w-full object-cover rounded-t" src="{{ event.img.url }}" alt="IMG" />
+          <div class="p-6">
+            <h2 class="font-bold text-xl mb-2">{{ event.title }}</h2>
+            <p class="text-gray-700 text-base">{{ event.content }}</p>
+          </div>
+          <div class="px-6">
+            <span class="text-lg text-gray-500">Date Announced: {{ event.date_start }} Till {{ event.date_end }}</span>
+          </div>
+          <div class="px-6 pt-4 pb-2">
+              <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{{ event.tag_1 }}</span>
+              <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{{ event.tag_2 }}</span>
+          </div>
+        </div>
+      {% endfor %}
+        <!-- ENDCARD -->
+
+      </div>
+    </div>
+  </div>
+</section>

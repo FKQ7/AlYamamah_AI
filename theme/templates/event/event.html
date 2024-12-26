@@ -1,10 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-<section class="relative bg-stone-50">
+<section class="relative">
     <!-- Background decorations -->
-    <div class="bg-sky-400 w-full sm:w-40 h-40 rounded-full absolute top-1 opacity-20 max-sm:right-0 sm:left-56 z-0"></div>
-    <div class="bg-emerald-500 w-full sm:w-40 h-24 absolute top-0 -left-0 opacity-20 z-0"></div>
-    <div class="w-full py-24 relative z-10 backdrop-blur-3xl">
         <div class="w-full max-w-7xl mx-auto px-2 lg:px-8">
             <div class="grid grid-cols-12 gap-8 max-w-4xl mx-auto xl:max-w-full">
                 
@@ -12,11 +9,10 @@
                 <div class="col-span-12 xl:col-span-5">
                     <h2 class="font-manrope text-3xl leading-tight text-gray-900 mb-1.5">Upcoming Events</h2>
                     <p class="text-lg font-normal text-gray-600">Don’t miss schedule</p>
-                    <p class="text-lg font-bold text-red-600 mb-8">NOTE THIS IS A BETA VERSION OF THE CALENDAR IF YOU FACE ANY PROBLEMS CONTACT US</p>
+                    <p class="text-lg font-bold text-red-600 mb-8">NOTE: THIS IS A BETA VERSION OF THE CALENDAR, IF YOU FACE ANY PROBLEMS CONTACT US</p>
                     <div class="flex gap-5 flex-col" id="event-list">
-                        <!-- Events dynamically rendered -->
                         {% for event in events %}
-                        <div class="p-6 rounded-xl bg-white">
+                        <div class="p-6 rounded-xl bg-white shadow-md">
                             <div class="flex items-center justify-between mb-3">
                                 <div class="flex items-center gap-2.5">
                                     <span class="w-2.5 h-2.5 rounded-full bg-purple-600"></span>
@@ -31,43 +27,40 @@
                         {% endfor %}
                     </div>
                 </div>
+
                 <!-- Calendar Section -->
                 <div class="col-span-12 xl:col-span-7 px-2.5 py-5 sm:p-8 bg-gradient-to-b from-white/25 to-white xl:bg-white rounded-2xl max-xl:row-start-1">
-                    
                     <div class="flex flex-col md:flex-row gap-4 items-center justify-between mb-5">
-                        
                         <div class="flex items-center gap-4">
-                            
                             <h5 class="text-xl leading-8 font-semibold text-gray-900" id="current-month">December 2024</h5>
                             <div class="flex items-center">
-                                <button id="prev-month" class="text-indigo-600 p-1 rounded transition-all duration-300 hover:text-white hover:bg-indigo-600">
+                                <button id="prev-month" class="text-orange-600 p-1 rounded transition-all duration-300 hover:text-white hover:bg-orange-600">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none">
                                         <path d="M10.0002 11.9999L6 7.99971L10.0025 3.99719" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path>
                                     </svg>
                                 </button>
-                                <button id="next-month" class="text-indigo-600 p-1 rounded transition-all duration-300 hover:text-white hover:bg-indigo-600">
+                                <button id="next-month" class="text-orange-600 p-1 rounded transition-all duration-300 hover:text-white hover:bg-orange-600">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none">
                                         <path d="M6.00236 3.99707L10.0025 7.99723L6 11.9998" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path>
                                     </svg>
                                 </button>
                             </div>
-                            
                         </div>
                     </div>
-                    <div class="grid grid-cols-7 rounded-t-3xl border-b border-indigo-200">
-                        <div class="py-3.5 border-r rounded-tl-xl border-indigo-200 bg-indigo-50 flex items-center justify-center text-sm font-medium text-indigo-600">Sun</div>
-                        <div class="py-3.5 border-r border-indigo-200 bg-indigo-50 flex items-center justify-center text-sm font-medium text-indigo-600">Mon</div>
-                        <div class="py-3.5 border-r border-indigo-200 bg-indigo-50 flex items-center justify-center text-sm font-medium text-indigo-600">Tue</div>
-                        <div class="py-3.5 border-r border-indigo-200 bg-indigo-50 flex items-center justify-center text-sm font-medium text-indigo-600">Wed</div>
-                        <div class="py-3.5 border-r border-indigo-200 bg-indigo-50 flex items-center justify-center text-sm font-medium text-indigo-600">Thu</div>
-                        <div class="py-3.5 border-r border-indigo-200 bg-indigo-50 flex items-center justify-center text-sm font-medium text-indigo-600">Fri</div>
-                        <div class="py-3.5 rounded-tr-xl bg-indigo-50 flex items-center justify-center text-sm font-medium text-indigo-600">Sat</div>
-                      </div>
-                    <div class="border border-indigo-200 rounded-xl">
-                        <div class="grid grid-cols-7 rounded-t-3xl border-b border-indigo-200">
+                    <div class="grid grid-cols-7 rounded-t-3xl border-b border-orange-200">
+                        <div class="py-3.5 border-r rounded-tl-xl border-orange-200 bg-orange-50 flex items-center justify-center text-sm font-medium text-orange-600">Sun</div>
+                        <div class="py-3.5 border-r border-orange-200 bg-orange-50 flex items-center justify-center text-sm font-medium text-orange-600">Mon</div>
+                        <div class="py-3.5 border-r border-orange-200 bg-orange-50 flex items-center justify-center text-sm font-medium text-orange-600">Tue</div>
+                        <div class="py-3.5 border-r border-orange-200 bg-orange-50 flex items-center justify-center text-sm font-medium text-orange-600">Wed</div>
+                        <div class="py-3.5 border-r border-orange-200 bg-orange-50 flex items-center justify-center text-sm font-medium text-orange-600">Thu</div>
+                        <div class="py-3.5 border-r border-orange-200 bg-orange-50 flex items-center justify-center text-sm font-medium text-orange-600">Fri</div>
+                        <div class="py-3.5 rounded-tr-xl bg-orange-50 flex items-center justify-center text-sm font-medium text-orange-600">Sat</div>
+                    </div>
+                    <div class="border border-orange-200 rounded-xl">
+                        <div class="grid grid-cols-7 rounded-t-3xl border-b border-orange-200">
                             <!-- Days of the Week -->
                             {% for day in days_of_week %}
-                            <div class="py-3.5 border-r border-indigo-200 bg-indigo-50 flex items-center justify-center text-sm font-medium text-indigo-600">
+                            <div class="py-3.5 border-r border-orange-200 bg-orange-50 flex items-center justify-center text-sm font-medium text-orange-600">
                                 {{ day }}
                             </div>
                             {% endfor %}
@@ -121,10 +114,12 @@
 
             let eventMarkup = '';
             dayEvents.forEach(event => {
-                eventMarkup += `<div class="text-xs bg-indigo-200 rounded my-1 p-1">${event.title}</div>`;
+                eventMarkup += `<div class="text-xs bg-orange-200 rounded my-1 p-1">${event.title}</div>`;
             });
 
-            calendarGridEl.innerHTML += `<div class="p-2 text-center ${new Date().toDateString() === new Date(year, month, i).toDateString() ? 'bg-indigo-100 rounded-full font-bold' : ''}">
+            const isToday = new Date().toISOString().split('T')[0] === day;
+
+            calendarGridEl.innerHTML += `<div class="p-2 text-center ${isToday ? 'bg-orange-100 font-bold' : ''} hover:bg-orange-50 transition duration-300">
                 <span>${i}</span>
                 ${eventMarkup ? `<div class="event-list">${eventMarkup}</div>` : ''}
             </div>`;
@@ -143,9 +138,5 @@
 
     renderCalendar(currentDate);
 </script>
-</section>
+
 {% endblock %}
-
-
-
-

@@ -16,19 +16,14 @@ common_questions = {
     "how are you?": "I am doing well, thank you.",
     "what can you do?": "I can help you with various tasks, such as answering questions regarding the uni, such as Events, News, and Announcements.",}
 
-def ask_openai(message):
-    normalized_message = message.lower().strip()
-    for question, response in common_questions.items():
-        if question in normalized_message:
-            return response
-    
+def ask_openai(message):    
     client = OpenAI(api_key=api_key)
     completion = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
             {"role": "system", "content": "DO NOT ANSWER ANY QUESTION THAT IS NOT RELATED TO THE UNIVERSITY. You can answer simple questions like 'How are you?' but not coding or math questions."},
             {
-            "role": "system",
+            "role": "assistant",
                 "content": (
                     "You are a university assistant. Your role is to help users navigate the campus and understand the building structure. "
                     "The university campus consists of:\n"
@@ -48,7 +43,7 @@ def ask_openai(message):
                     "   - The number immediately after the letter indicates the floor (1 = ground floor, 2 = 1st floor, etc.).\n"
                     "   - The last digit indicates the classroom on that floor.\n"
                     "Provide clear and concise directions based on this information."
-                )
+                ) 
             },
             {"role": "user", "content": message}
         ]

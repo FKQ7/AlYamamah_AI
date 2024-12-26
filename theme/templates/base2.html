@@ -10,38 +10,18 @@
   .disable-links {
       pointer-events: none;
   }
-  .acc{
-      color: #F68938;
-  }
   </style>
 </head>
 <body>
   <div class="">
-    <div class="">
-      <header class="">
+    <div class="bg-white">
+      <header class="absolute inset-x-0 top-0 z-50">
         <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
           <div class="flex lg:flex-1">
-            <a href="/" class="block -m-1.5 p-1.5">
+            <a href="/" class="-m-1.5 p-1.5">
               <span class="sr-only">Your Company</span>
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                xmlns:xlink="http://www.w3.org/1999/xlink" 
-                viewBox="0 0 1080 1080" 
-                class="h-auto w-20 sm:w-20 md:w-24 lg:w-32">
-                <style>
-                  .st0 { fill: #F68938; }
-                  .st1 { font-family: 'BallegaRegular'; }
-                  .st2 { font-size: 157.82px; }
-                </style>
-                <path d="M154.4,361.4c-10.4,0-18.9,8.5-18.9,18.9v208.3h0.2v50.3c0,1.9,2.1,3.1,3.7,2l76.4-49.3c3.1-2,6.6-3,10.3-3h252.3
-                c10.4,0,18.9-8.5,18.9-18.9V380.3c0-10.4-8.5-18.9-18.9-18.9H154.4z" />
-                <path class="st0" d="M509.8,336.5c10.4,0,18.9,8.5,18.9,18.9v208.3h-0.2V614c0,1.9-2.1,3.1-3.7,2l-76.4-49.3c-3.1-2-6.6-3-10.3-3
-                H185.8c-10.4,0-18.9-8.5-18.9-18.9V355.4c0-10.4,8.5-18.9,18.9-18.9H509.8z" />
-                <text transform="matrix(1 0 0 1 576.0545 462.8729)" class="st0 st1 st2">YU</text>
-                <text transform="matrix(1 0 0 1 575.2673 585.8929)" class="st1 st2">AI</text>
-              </svg>
+              <img class="h-8 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600" alt="">
             </a>
-            
           </div>
           <div class="flex lg:hidden">
             <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700" onclick="toggleMenu()">
@@ -69,24 +49,9 @@
           <div class="fixed inset-0 z-50 bg-black opacity-50" onclick="toggleMenu()"></div>
           <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div class="flex items-center justify-between">
-              <a href="/" class="block -m-1.5 p-1.5">
-                <svg 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  xmlns:xlink="http://www.w3.org/1999/xlink" 
-                  viewBox="0 0 1080 1080" 
-                  class="h-auto w-20">
-                  <style>
-                    .st0 { fill: #F68938; }
-                    .st1 { font-family: 'BallegaRegular'; }
-                    .st2 { font-size: 157.82px; }
-                  </style>
-                  <path d="M154.4,361.4c-10.4,0-18.9,8.5-18.9,18.9v208.3h0.2v50.3c0,1.9,2.1,3.1,3.7,2l76.4-49.3c3.1-2,6.6-3,10.3-3h252.3
-                  c10.4,0,18.9-8.5,18.9-18.9V380.3c0-10.4-8.5-18.9-18.9-18.9H154.4z" />
-                  <path class="st0" d="M509.8,336.5c10.4,0,18.9,8.5,18.9,18.9v208.3h-0.2V614c0,1.9-2.1,3.1-3.7,2l-76.4-49.3c-3.1-2-6.6-3-10.3-3
-                  H185.8c-10.4,0-18.9-8.5-18.9-18.9V355.4c0-10.4,8.5-18.9,18.9-18.9H509.8z" />
-                  <text transform="matrix(1 0 0 1 576.0545 462.8729)" class="st0 st1 st2">YU</text>
-                  <text transform="matrix(1 0 0 1 575.2673 585.8929)" class="st1 st2">AI</text>
-                </svg>
+              <a href="#" class="-m-1.5 p-1.5">
+                <span class="sr-only">Your Company</span>
+                <img class="h-8 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600" alt="">
               </a>
               <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700" onclick="toggleMenu()">
                 <span class="sr-only">Close menu</span>
@@ -102,7 +67,7 @@
                   <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">💬 Chat with YU AI</a>
                   <a href="/" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">🏠 Home</a>
                   <a href="/news" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">📰 Campus News</a>
-                  <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 disable-links">🗺️ Interactive Map</a>
+                  <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">🗺️ Interactive Map</a>
                 </div>
                 <div class="py-6">
                   <a href="#" class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Log in</a>
@@ -142,31 +107,11 @@
                         </svg>
                 </a> -->
                     <ul class="text-lg flex items-center justify-center flex-col gap-7 md:flex-row md:gap-12 transition-all duration-500 py-16 mb-10 border-b border-gray-200">
-                        <li> 
-                          <a href="/" class="block -m-1.5 p-1.5">
-                            <svg 
-                              xmlns="http://www.w3.org/2000/svg" 
-                              xmlns:xlink="http://www.w3.org/1999/xlink" 
-                              viewBox="0 0 1080 1080" 
-                              class="h-auto lg:mt-5 w-32 sm:w-32 md:w-32 lg:w-32">
-                              <style>
-                                .st0 { fill: #F68938; }
-                                .st1 { font-family: 'BallegaRegular'; }
-                                .st2 { font-size: 157.82px; }
-                              </style>
-                              <path d="M154.4,361.4c-10.4,0-18.9,8.5-18.9,18.9v208.3h0.2v50.3c0,1.9,2.1,3.1,3.7,2l76.4-49.3c3.1-2,6.6-3,10.3-3h252.3
-                              c10.4,0,18.9-8.5,18.9-18.9V380.3c0-10.4-8.5-18.9-18.9-18.9H154.4z" />
-                              <path class="st0" d="M509.8,336.5c10.4,0,18.9,8.5,18.9,18.9v208.3h-0.2V614c0,1.9-2.1,3.1-3.7,2l-76.4-49.3c-3.1-2-6.6-3-10.3-3
-                              H185.8c-10.4,0-18.9-8.5-18.9-18.9V355.4c0-10.4,8.5-18.9,18.9-18.9H509.8z" />
-                              <text transform="matrix(1 0 0 1 576.0545 462.8729)" class="st0 st1 st2">YU</text>
-                              <text transform="matrix(1 0 0 1 575.2673 585.8929)" class="st1 st2">AI</text>
-                            </svg>
-                          </a>
-                      </li>
+                        <li><a href="/" class="text-gray-800 hover:text-gray-900">Home</a></li>
                         <li><a href="/news" class=" text-gray-800 hover:text-gray-900">Campus News</a></li>
                         <li><a href="/events" class=" text-gray-800 hover:text-gray-900">Event Calendar</a></li>
                         <li><a href="#" class=" text-gray-800 hover:text-gray-900">Chat with YU AI</a></li>
-                        <li><a href="#" class=" text-gray-800 hover:text-gray-900 disable-links">interactive map</a></li>
+                        <li><a href="#" class=" text-gray-800 hover:text-gray-900">interactive map</a></li>
                         <li><a href="https://www.fayezs.site" class=" text-gray-800 hover:text-gray-900">Developer Site</a></li>
                     </ul>
                     <div class="flex space-x-10 justify-center items-center mb-14">
@@ -187,12 +132,12 @@
         </div>
     </footer>
     </div>
-    <script>
-      function toggleMenu() {
-          const menu = document.getElementById('mobile-menu');
-          menu.classList.toggle('hidden');
-      }
-      </script>
   </div>
+  <script>
+    function toggleMenu() {
+        const menu = document.getElementById('mobile-menu');
+        menu.classList.toggle('hidden');
+    }
+    </script>
 </body>
 </html>
