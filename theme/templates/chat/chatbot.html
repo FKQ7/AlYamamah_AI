@@ -16,17 +16,20 @@
         <div class="flex items-start gap-2.5 pt-8">
           <div class="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-orange-400 rounded-e-xl rounded-es-xl">
             <div class="flex items-center space-x-2 rtl:space-x-reverse">
-              <span class="text-sm font-semibold text-gray-900">Yamamah AI</span>
+              <span class="text-md font-semibold text-white">Yamamah AI</span>
             </div>
-            <p class="text-sm font-normal text-gray-900 ">Hello I'm Yamamah AI, how can I help you today?</p>
-            <p class="text-sm font-normal py-1 text-gray-900 ">Some FAQ's I could answer</p>
+            <p class="text-md font-normal text-white ">Hello I'm Yamamah AI, how can I help you today?</p>
+            <p class="text-md font-normal py-1 text-white ">Some FAQ's I could answer</p>
 
-            <ul class="text-sm font-bold text-gray-900">
+            <ul class="text-md font-bold text-white">
               <li>
-                - Ask about directions 
+                - Ask about Directions
               </li>
               <li>
-                - heloo
+                - Ask about Majors
+              </li>
+              <li>
+                - Ask about Anything
               </li>
             </ul>
           </div>
@@ -67,11 +70,11 @@
     messageItem.classList.add('message', 'sent');
     messageItem.innerHTML = `
         <div class="flex items-end justify-end gap-2.5 pt-4">
-          <div class="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-blue-500 text-white rounded-e-xl rounded-es-xl">
+          <div class="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-black text-white rounded-e-xl rounded-es-xl">
             <div class="flex items-center space-x-2 rtl:space-x-reverse">
               <span class="text-sm font-semibold">You</span>
             </div>
-            <p class="text-sm font-normal py-2.5">${message}</p>
+            <p class="text-md font-normal py-2.5">${message}</p>
           </div>
         </div>`;
     messagesList.appendChild(messageItem);
@@ -89,21 +92,21 @@
       .then(response => response.json())
       .then(data => {
         const response = data.response;
+        const formattedResponse = response.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
         const messageItem = document.createElement('div');
         messageItem.classList.add('message', 'received');
         messageItem.innerHTML = `
         <div class="flex items-start gap-2.5 pt-8">
           <div class="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-orange-400 rounded-e-xl rounded-es-xl">
             <div class="flex items-center space-x-2 rtl:space-x-reverse">
-              <span class="text-sm font-semibold text-gray-900">Yamamah AI</span>
+              <span class="text-md font-semibold text-white">Yamamah AI</span>
             </div>
-            <p class="text-sm font-normal py-2.5 text-gray-900">${response}.</p>
+            <p class="text-md font-normal py-2.5 text-white">${formattedResponse}.</p>
           </div>
         </div>
           `;
         messagesList.appendChild(messageItem);
       });
   });
-
 </script>
 {% endblock %}

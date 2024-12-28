@@ -5,7 +5,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 
 class News(models.Model):
     class Meta:
-        ordering = ['-date_start']  # Default sorting by date_start in descending order
+        ordering = ['-date_start']
     img = models.ImageField(upload_to='news_images/')
     title = models.CharField(max_length=200)
     content = models.TextField(max_length=700)
@@ -19,10 +19,8 @@ class News(models.Model):
         if self.img:
             img = Image.open(self.img)
             
-            # Resize the image to 500x200 pixels using LANCZOS (formerly known as ANTIALIAS)
             img = img.resize((500, 200), Image.Resampling.LANCZOS)
 
-            # Save the resized image back to the model's img field
             img_io = BytesIO()
             img.save(img_io, format='PNG')  # Save as JPEG; use 'PNG' if needed
             img_io.seek(0)
