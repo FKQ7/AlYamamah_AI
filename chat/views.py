@@ -44,4 +44,4 @@ def chat(request):
         message = request.POST.get('message')
         response = ask_openai(message)
         return JsonResponse({'message': message, 'response': response})
-    return render(request, 'chat/chatbot.html')
+    return render(request, 'chat/chat.html')

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+
+
+{% block content %}
+<section class="w-full h-full">
+    <div class="max-w-3xl mx-auto text-right px-4">
+        <h1 class="text-3xl font-bold">
+            {{blog.title|safe}}
+        </h1>
+        <div class="mt-4">
+            <div class="flex items-center mt-5" dir="rtl">
+
+                <div class="pr-2 text-sm">
+                    <span class="font-semibold text-primary-600 text-lg">
+                        الكاتب: {{blog.author.first_name}} {{blog.author.last_name}}
+                    </span>
+                    
+                </div>
+            </div>
+            <div class="my-5">
+                <p>
+                {{blog.date}} :تاريخ النشرة
+                </p>
+            </div>
+            <div class="content">
+                <div>
+                    <img src="{{ blog.img.url}}" class="w-full h-[240px] md:h-[450px] object-cover rounded-lg" alt="blog image">
+                </div>
+                <h1 class="text-3xl font-bold py-5">
+                    {{blog.title|safe}}
+                </h1>
+                <div class="h-0.5 bg-black w-full"></div>
+                <div class="mt-4 text-lg bg-[#EFEDE8] p-3 rounded-lg blog-content">
+                    <p class="inline text-xl font-semibold underline" style="background-color: #F8DF66;">
+                        {{blog.author.first_name}} {{blog.author.last_name}}
+                    </p>
+                    <p class="">{{ blog.content|safe }}</p>
+
+                    <style>
+                        .blog-content a {
+                            color: #f97316; /* Orange color for links */
+                            text-decoration: underline;
+                        }
+                        .blog-content a:hover {
+                            color: #ea580c; /* Darker orange for hover */
+                        }
+                        .blog-content img {
+                            display: block !important; /* Ensures proper spacing */
+                            max-width: 100% !important; /* Makes the image responsive */
+                            height: auto !important; /* Maintains the aspect ratio */
+                            margin: 10px auto !important; /* Centers the image and adds spacing */
+                            border-radius: 8px !important; /* Optional: Rounded corners */
+                        }rder-radius: 8px; /* Optional: Adds rounded corners for better aesthetics */
+                        }
+                    </style>
+                </div>
+                <div class="h-0.5 bg-black w-full"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

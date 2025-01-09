@@ -1,11 +1,15 @@
 from django.db import models
 from PIL import Image
+import os
 from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.utils.translation import gettext_lazy as _
+from ckeditor_uploader.fields import RichTextUploadingField
 
 class News(models.Model):
     class Meta:
         ordering = ['-date_start']
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True, blank=True)
     img = models.ImageField(upload_to='news_images/')
     title = models.CharField(max_length=200)
     content = models.TextField(max_length=700)
@@ -15,20 +19,32 @@ class News(models.Model):
     tag_2 = models.CharField(max_length=100, null=True, blank=True)
     tag_3 = models.CharField(max_length=100, null=True, blank=True)
     
-    def save(self, *args, **kwargs):
-        if self.img:
-            img = Image.open(self.img)
-            
-            img = img.resize((500, 200), Image.Resampling.LANCZOS)
-
-            img_io = BytesIO()
-            img.save(img_io, format='PNG')  # Save as JPEG; use 'PNG' if needed
-            img_io.seek(0)
-            
-            # Save the image as an InMemoryUploadedFile
-            self.img = InMemoryUploadedFile(img_io, None, self.img.name, 'image/jpeg', img_io.tell(), None)
-        
-        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
+
+class Blogs(models.Model):
+    class Meta:
+        ordering = ['-date']
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True, blank=True)
+    img = models.ImageField(upload_to='blogs_images/')
+    title = models.CharField(
+        _("Blog Title"), max_length=250,
+        null=False, blank=False
+    )
+    content = RichTextUploadingField()
+    date = models.DateField(auto_now=True, auto_created=True)
+
+    def __str__(self):
+        return self.title
+
+class Event(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    event_date = models.DateField()
+    event_date_end = models.DateField()
+    time_start = models.TimeField(null=True, blank=True)
+    time_end = models.TimeField(null=True, blank=True)
+    def __str__(self):
+        return self.title
+

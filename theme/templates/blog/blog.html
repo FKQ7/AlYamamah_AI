@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+{% block content %}
+        <section class="hidden xl:container xl:block xl:mx-auto px-20 xl:blogs xl:h-full mb-16">
+          <div class="text-right mx-auto " dir="rtl">
+            <p class="px-5 pt-10 xl:pt-0 text-6xl font-bold">
+              مقالات مختارة لك!
+            </p>
+            <p class="px-5 pt-5 xl:pt-3 pb-10 xl:pb-5 text-2xl">
+              لا تفوتك احدث مقالاتنا في مجتمعك
+             </p>
+          </div>
+
+          <div class="grid grid-cols-3 h-[850px] grid-rows-2 gap-3 mx-auto" dir="rtl">
+            <div class="1-rouned rounded-lg row-span-2 m-0 p-0 col-start-3 row-start-1 border-4 border-primary-400 text-text">
+              <div class="w-full flex flex-col justify-between h-[740px] 2xl:h-[860px] p-4">
+                <img class="w-full h-[60%] rounded-lg object-cover" src="{{header.0.img.url}}" alt="">
+                <div class="flex-row justify-between">
+                  <h1 class="pt-4 underline text-primary-600 font-bold text-md sm:text-xl lg:text-2xl xl: text-right leading-snug mb-2">
+                    <a href="/blog/{{header.0.id}}">
+                      {{header.0.title}}
+                    </a>
+                  </h1>
+                  <!-- Description -->
+                  <div class="mb-4 text-right">
+                    <p class="text-right inline text-md">
+                      {{header.0.content | truncatewords:30 | safe}}
+                    </p>
+                    </div>
+                </div>
+                  <!-- Author and Date -->
+                  <div class="flex">
+                    <img class="rounded-full w-[24px] h-[24px] ml-2 object-cover" src="https://placehold.co/300x300" alt="">
+                      <p class="text-right text-sm sm:text-md text-primary-500">
+                        {{header.0.author.first_name}} {{header.0.author.last_name}}
+                      </p>
+                      </div>
+                      <p class="text-sm text-right pb-2 sm:text-lg text-gray-400">
+                        تاريخ النشر: {{header.0.date}}
+                      </p>
+              </div>
+            </div>
+            <div class="2-wide rounded-lg col-span-2 col-start-1 row-start-1  w-full h-full text-text ">
+              <div class="flex border-4 border-primary-400 rounded-lg flex-row justify-between p-4 xl:h-[381px] 2xl:h-[424px]">
+                  <img class="w-[50%] h-full rounded-lg object-cover" src="{{header.1.img.url}}" alt="ROUNDED NOT WORKING">
+                  <div class="flex flex-col justify-between p-2 pr-4 w-full h-full">
+                    <!-- Title -->
+                      <h1 class="font-bold underline text-primary-600 text-md sm:text-xl lg:text-xl lg:text-xl xl:text-2xl text-right leading-snug mb-2">
+                        <a href="/blog/{{header.1.id}}">
+                          {{header.1.title}}
+                        </a>
+                      </h1>
+                      <!-- Description -->
+                      <div class="mb-4 text-right">
+                        <p class="text-right inline text-md">
+                          {{header.1.content | truncatewords:50| safe}}
+                        </p>
+                      <!-- Author and Date -->
+
+                    </div>
+                    <div class="flex">
+                      <img class="rounded-full w-[24px] h-[24px] ml-2 object-cover" src="https://placehold.co/300x300" alt="">
+                      <p class="text-right text-sm sm:text-md text-primary-500">
+                        {{header.1.author.first_name}} {{header.1.author.last_name}}
+                      </p>
+                    </div>
+                    <p class="text-sm text-right sm:text-md md:text-lg text-gray-400 pr-4">
+                      تاريخ النشر: {{header.1.date}}
+                    </p>
+
+                  </div>
+              </div>
+            </div>
+            <div class="3- rounded-lg row-start-2 border-4 border-primary-400 w-full h-[334px] text-text h-full h-full p-4">
+                <img class="mb-4 h-[209px] 2xl:h-[252px] w-full rounded object-cover" src="{{header.2.img.url}}" alt="">
+                    <!-- Title -->
+                    <h1 class="7-words font-bold underline text-primary-600 text-md sm:text-xl lg:text-lg xl:text-right leading-snug mb-2">
+                      <a href="/blog/{{header.2.id}}">{{header.2.title}}</a>
+                    </h1>
+                    <!-- Description -->
+                    <div class="mb-4 text-right">
+                      <p class="10-words text-right inline text-sm sm:text-md ">
+                        {{header.2.content | truncatewords:10| safe}}
+                      </p>
+                    </div>
+                    <!-- Author and Date -->
+                    <div class="flex">
+                      <img class="rounded-full w-[24px] h-[24px] ml-2 object-cover" src="https://placehold.co/300x300" alt="">
+                      <p class="text-right text-sm sm:text-md text-primary-500">
+                        {{header.2.author.first_name}} {{header.2.author.last_name}}
+                      </p>
+                    </div>
+                    <p class="text-sm text-right sm:text-md text-gray-400">
+                      تاريخ النشر: {{header.2.date}}
+                    </p>
+            </div>
+            
+            <div class="3- rounded-lg row-start-2 border-4 border-primary-400 w-full h-[334px] text-text h-full h-full p-4">
+              <img class="mb-4 h-[209px] 2xl:h-[252px] w-full rounded object-cover" src="{{header.3.img.url}}" alt="">
+                  <!-- Title -->
+                  <h1 class="7-words underline font-bold text-primary-600 text-md sm:text-xl lg:text-lg xl:text-right leading-snug mb-2">
+                    <a href="/blog/{{header.3.id}}">{{header.3.title}}</a>
+                  </h1>
+                  <!-- Description -->
+                  <div class="mb-4 text-right">
+                    <p class="10-words text-right inline text-sm sm:text-md ">
+                      {{header.3.content | truncatewords:7| safe}}
+                    </p>
+                  </div>
+                  <!-- Author and Date -->
+                  <div class="flex">
+                    <img class="rounded-full w-[24px] h-[24px] ml-2 object-cover" src="https://placehold.co/300x300" alt="">
+                    <p class="text-right text-sm sm:text-md text-primary-500">
+                      {{header.3.author.first_name}} {{header.3.author.last_name}}
+                    </p>
+                  </div>
+                  <p class="text-sm text-right sm:text-md text-gray-400">
+                    تاريخ النشر: {{header.3.date}}
+                  </p>
+          </div>
+        </div>
+        </section>
+
+        <section class="container xl:border-y-4 xl:border-black mx-auto p-5 md:px-24 lg:px-52 xl:px-72 2xl:px-[420px]" dir="rtl">
+          <div>
+            <p class="text-7xl font-bold">
+              مقالات
+            </p>
+            <p class="text-2xl font-normal text-gray-600 mb-8 mt-3">
+              مقالات مختارة لك و احدث مقالات مختارة لك
+            </p>
+          </div>
+          {% for blog in blogs %}
+          <div class="mt-5 ">
+            <div class="w-full  h-full rounded-md xl:rounded-xl mt-2">
+              <div class="w-full -white h-full p-5 border-4 border-primary-400 text-text rounded-lg shadow-md ">
+                <!-- Image Section -->
+                <img class="w-full h-[200px] rounded-xl object-cover mb-3 md:h-[340px]" 
+                     src="{{blog.img.url}}" alt="">
+                <!-- Content Section -->
+                <div class="flex flex-col justify-start pr-2 w-full">
+                  <!-- Title -->
+                  <h1 class="font-bold 7-words underline text-primary-600 text-xl md:text-3xl text-right leading-snug mb-2" style="text-decoration: underline; text-decoration-color: #fdba74;">
+                    <a href="/blog/{{blog.id}}">{{blog.title}}</a>
+                  </h1>
+                  <!-- Description -->
+                  <div class="text-right lg:pb-5">
+                    <p class="whatever-words prose prose-sm prose-gray rtl text-right text-right text-gray-500 text-md md:text-lg inline mb-4 lg:text-md">
+                      {{blog.content | truncatewords:30 | safe }}
+                    </p>
+                  </div>
+                  <!-- Author and Date -->
+                  <div class="flex mt-5 ">
+                    <img class="rounded-full w-[35px] h-[35px] ml-2" src="https://placehold.co/300x300" alt="">
+                    <p class="text-right mt-1 text-md md:text-lg text-primary-500">
+                      {{blog.author.first_name}} {{blog.author.last_name}}
+                    </p>
+                  </div>
+                  <p class="text-md text-right md:text-lg text-gray-400 mt-2">
+                    تاريخ النشر: {{blog.date}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </section>
+      </div>
+{% endblock %}
