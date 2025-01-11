@@ -95,6 +95,7 @@
     <!-- Message Sending Form -->
     <div class="absolute bottom-0 w-full bg-white border-t border-gray-100">
       <form class="message-form p-4 flex items-center gap-3" dir="rtl">
+        {% csrf_token %}
         <div class="relative flex-grow">
           <input  
             placeholder="اكتب رسالتك هنا..." 
@@ -126,6 +127,17 @@
     const messages = document.querySelector('.messages');
     const messageForm = document.querySelector('.message-form');
     const messageInput = document.querySelector('.message-input');
+    function getCSRFToken() {
+      const name = 'csrftoken';
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.startsWith(name + '=')) {
+              return cookie.substring(name.length + 1);
+          }
+      }
+      return null;
+  }
     
     messageForm.addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -135,7 +147,8 @@
         alert('Please enter a message.');
         return;
       }
-    
+      const csrfToken = getCSRFToken(); // Get CSRF token
+
       // Add user message
       const userMessageHtml = `
         <div class="user-message p-2 message-animation">
@@ -185,8 +198,12 @@
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken, // Add CSRF token to headers
           },
-          body: JSON.stringify({ message: message }),
+          body: JSON.stringify({
+          'csrfmiddlewaretoken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+          'message': message
+          }),
         });
     
         if (!response.ok) {
