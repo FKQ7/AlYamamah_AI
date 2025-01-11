@@ -4,16 +4,20 @@
         <div class="py-32 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-12">
           <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
             <div class="mr-auto place-self-center lg:col-span-7">
-                <h1 class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-7xl pb-5">
-                  هلا والله في اليمامة
-                </h1>
+              <h1 class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-7xl pb-5">
+                {% if user.is_authenticated %}
+                    هلا والله يا <span class="font-normal text-primary-600">{{user.first_name}}</span> في اليمامة
+                {% else %}
+                    هلا والله في اليمامة
+                {% endif %}
+            </h1>
                 <p class="max-w-2xl xl:w-[90%] mb-10 text-gray-500 lg:mb-8 md:text-lg lg:text-xl">
                   كل اخبار, مقالات, و المواعيد في موقع واحد يضمن كل احتياجات المستخدم سواء طالب ام مهتم في الجامعة
                 </p>
-                <a href="#" class="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 ">
+                <a href="/chat" class="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 ">
                    Yu Ai تحدث مع
                 </a>
-                <a href="#" class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100">
+                <a href="/news" class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100">
                   اخر الاخبار 📰
                 </a> 
             </div>
@@ -45,40 +49,40 @@
             <div class="w-full xl:w-1/2 xl:px-1">
               <!--CARD 1-->
               {% for news in news %}
-              <div class="w-full h-46 lg:h-[230px] rounded-md">
-                <div class="flex w-full h-full p-3 border-2 border-primary-400 text-text rounded-lg xl:rounded-xl mt-2 shadow-md">
-                  <!-- Image Section -->
-                  <img class="w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] md:w-[152px] md:h-[152px] lg:w-[170px] lg:h-[170px] rounded-xl object-cover mb-3 md:mb-0 md:mr-4" 
-                       src="media/{{ news.img }}" alt="">
-                
-                  <!-- Content Section -->
-                  <div class="flex flex-col justify-between pr-2 w-full">
-                    <!-- Title -->
-                    <h1 class="7-words font-bold text-md sm:text-xl lg:text-2xl xl: text-right leading-snug mb-2">
-                      {{ news.title }}
-                    </h1>
-                    <!-- Description -->
-                    <div class="mb-4 text-right">
-                      <p class="10-words lg:hidden text-right inline text-sm sm:text-md ">
-                        {{ news.content| truncatewords:10 }}
-                      </p>
-                      <p class="hidden lg:inline text-right text-sm sm:text-md">
-                        {{ news.content| truncatewords:30 }}
+              <a href="/news/{{ news.id }}" class="block w-full">
+                <div class="w-full h-46 lg:h-[230px] rounded-md " dir="rtl">
+                  <div class="flex w-full h-full p-3 border-2 hover:bg-[#eeede8] border-primary-400 text-text rounded-lg xl:rounded-xl mt-2 shadow-md">
+                    <!-- Image Section -->
+                    <img class="w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] md:w-[152px] md:h-[152px] lg:w-[170px] lg:h-[170px] rounded-xl object-cover mb-3 md:mb-0 md:mr-4" 
+                         src="media/{{ news.img }}" alt="">
+              
+                    <!-- Content Section -->
+                    <div class="flex flex-col justify-between pr-2 w-full">
+                      <!-- Title -->
+                      <h1 class="7-words text-right hover:underline text-primary-500 font-bold text-md sm:text-xl lg:text-2xl xl:text-right leading-snug mb-2">
+                        {{ news.title }}
+                      </h1>
+                      <!-- Description -->
+                      <div class="mb-4 text-right">
+                        <div class="hidden lg:inline text-right text-sm sm:text-md">
+                          {{ news.content| truncatewords:30 | safe }}
+                        </div>
+                      </div>
+                      <!-- Author and Date -->
+                      <div class="flex">
+                        <img class="rounded-full w-[24px] h-[24px] ml-2" src="https://placehold.co/300x300" alt="">
+                        <p class="text-right text-sm sm:text-md text-primary-500">
+                          {{ news.author.first_name }} {{ news.author.last_name }}
+                        </p>
+                      </div>
+                      <p class="text-sm text-right sm:text-md text-gray-400">
+                        تاريخ النشر: {{ news.date_start }}
                       </p>
                     </div>
-                    <!-- Author and Date -->
-                    <div class="flex">
-                      <img class="rounded-full w-[24px] h-[24px] ml-2" src="https://placehold.co/300x300" alt="">
-                      <p class="text-right text-sm sm:text-md text-primary-500">
-                        {{ news.author.first_name }} {{ news.author.last_name }}
-                      </p>
-                    </div>
-                    <p class="text-sm text-right sm:text-md text-gray-400">
-                      تاريخ النشر: {{ news.date_start }}
-                    </p>
                   </div>
                 </div>
-              </div>
+              </a>
+              
               {% endfor %}
               <!--END CARD 1-->
 
@@ -88,67 +92,74 @@
               <div class="xl:hidden text-right mx-auto px-5 pb-2 text-5xl font-bold " dir="rtl">
                 <p>مقالات</p>
               </div>
-              <div class="w-full border-2 border-primary-400 text-text h-full lg:h-[349px] rounded-md xl:rounded-xl mt-2">
-                <div class="w-full h-full p-5  border-2 border-primary-400  text-text rounded-lg shadow-md lg:flex">
-                  <!-- Image Section -->
-                  <img class="w-full h-[200px] rounded-xl object-cover mb-3 md:h-[50%] lg:h-[270px] lg:w-[270px]" 
-                       src="{{ blogs.0.img.url }}/" alt="">
-                
-                  <!-- Content Section -->
-                  <div class="flex flex-col justify-between pr-2 w-full lg:px-5">
-                    <!-- Title -->
-                    <h1 class="font-bold 7-words text-xl md:text-3xl lg:text-2xl  text-right leading-snug mb-2">
-                      {{ blogs.0.title }}
-                    </h1>
-                    <!-- Description -->
-                    <div class="text-right lg:pb-5">
-                      <p class="whatever-words text-right text-md md:text-lg inline mb-4 lg:text-md">
-                        {{ blogs.0.content | truncatewords:20 | safe }}
+              <a href="blog/{{ blogs.0.id }}" class="block hover:bg-[#eeede8]">
+                <div class="w-full border-2 border-primary-400 text-text h-full lg:h-[349px] rounded-md xl:rounded-xl mt-2">
+                  <div class="w-full h-full p-5  border-2 border-primary-400 text-text rounded-lg shadow-md lg:flex">
+                    <!-- Image Section -->
+                    <img class="w-full h-[200px] rounded-xl object-cover mb-3 md:h-[50%] lg:h-[270px] lg:w-[270px]" 
+                         src="{{ blogs.0.img.url }}/" alt="">
+              
+                    <!-- Content Section -->
+                    <div class="flex flex-col justify-between pr-2 w-full lg:px-5">
+                      <!-- Title -->
+                      <h1 class="font-bold hover:underline text-primary-500 7-words text-xl md:text-3xl lg:text-2xl text-right leading-snug mb-2">
+                        {{ blogs.0.title }}
+                      </h1>
+                      <!-- Description -->
+                      <div class="text-right lg:pb-5">
+                        <p class="whatever-words text-right text-md md:text-lg inline mb-4 lg:text-md">
+                          {{ blogs.0.content | truncatewords:20 | safe }}
+                        </p>
+                      </div>
+                      <!-- Author and Date -->
+                      <div class="flex mt-4">
+                        <img class="rounded-full w-[35px] h-[35px] ml-2" src="https://placehold.co/300x300" alt="">
+                        <p class="text-right text-md md:text-lg text-primary-500">
+                          {{ blogs.0.author.first_name }} {{blogs.0.author.last_name }}
+                        </p>
+                      </div>
+                      <p class="text-md text-right md:text-lg text-gray-400">
+                        تاريخ النشر: {{ blogs.0.date }}
                       </p>
                     </div>
-                    <!-- Author and Date -->
-                    <div class="flex mt-4">
-                      <img class="rounded-full w-[35px] h-[35px] ml-2" src="https://placehold.co/300x300" alt="">
-                      <p class="text-right text-md md:text-lg text-primary-500">
-                        {{ blogs.0.author.first_name }} {{blogs.0.author.last_name }}
-                      </p>
-                    </div>
-                    <p class="text-md text-right md:text-lg text-gray-400">
-                      تاريخ النشر: {{ blogs.0.date}}
-                    </p>
                   </div>
                 </div>
-              </div>
-              <div class="hidden xl:block w-full  border-2 border-primary-400  h-full lg:h-[349px] xl:rounded-xl rounded-md mt-2">
-                <div class="w-full h-full p-5  border-2 border-primary-400  text-text rounded-lg shadow-md lg:flex">
-                  <!-- Image Section -->
-                  <img class="w-full h-[200px] rounded-xl object-cover mb-3 md:h-[50%] lg:h-[270px] lg:w-[270px]" 
-                       src="{{ blogs.1.img.url }}/" alt="">
-                
-                  <!-- Content Section -->
-                  <div class="flex flex-col justify-start pr-2 w-full lg:px-5">
-                    <!-- Title -->
-                    <h1 class="font-bold text-xl md:text-3xl lg:text-2xl  text-right leading-snug mb-2">
-                      {{ blogs.1.title }}
-                    </h1>
-                    <!-- Description -->
-                    <div class="text-right lg:pb-5">
-                      <p class="text-right text-md md:text-lg inline mb-4 lg:text-md">
-                        {{ blogs.1.content | truncatewords:20| safe }}
-
+              </a>
+              
+              <a href="blog/{{ blogs.1.id }}" class="block hover:bg-[#eeede8]">
+                <div class="hidden xl:block w-full border-2 border-primary-400 h-full lg:h-[349px] xl:rounded-xl rounded-md mt-2">
+                  <div class="w-full h-full p-5 border-2 border-primary-400 text-text rounded-lg shadow-md lg:flex">
+                    <!-- Image Section -->
+                    <img class="w-full h-[200px] rounded-xl object-cover mb-3 md:h-[50%] lg:h-[270px] lg:w-[270px]" 
+                         src="{{ blogs.1.img.url }}/" alt="">
+              
+                    <!-- Content Section -->
+                    <div class="flex flex-col justify-between pr-2 w-full lg:px-5">
+                      <!-- Title -->
+                      <h1 class="font-bold hover:underline text-primary-500 text-xl md:text-3xl lg:text-2xl text-right leading-snug mb-2">
+                        {{ blogs.1.title }}
+                      </h1>
+                      <!-- Description -->
+                      <div class="text-right lg:pb-5">
+                        <p class="text-right text-md md:text-lg inline mb-4 lg:text-md">
+                          {{ blogs.1.content | truncatewords:20 | safe }}
+                        </p>
+                      </div>
+                      <!-- Author and Date -->
+                      <div class="flex mt-4">
+                        <img class="rounded-full w-[35px] h-[35px] ml-2" src="https://placehold.co/300x300" alt="">
+                        <p class="text-right text-md md:text-lg text-primary-500">
+                          {{ blogs.1.author.first_name }} {{blogs.1.author.last_name }}
+                        </p>
+                      </div>
+                      <p class="text-md text-right md:text-lg text-gray-400">
+                        تاريخ النشر: 28 ديسمبر 2024
                       </p>
                     </div>
-                    <!-- Author and Date -->
-                    <div class="flex">
-                      <img class="rounded-full w-[35px] h-[35px] ml-2" src="https://placehold.co/300x300" alt="">
-                      <p class="text-right text-md md:text-lg text-primary-500">
-                        فايز القحطاني
-                      </p>
-                    </div>
-                    <p class="text-md text-right md:text-lg text-gray-400">تاريخ النشر: 28 ديسمبر 2024</p>
                   </div>
                 </div>
-              </div>
+              </a>
+              
             </div>
             
           </div>
@@ -173,7 +184,7 @@
                     <div class="p-6 xl:mt-1 rounded-xl bg-white border-2 border-gray-200">
                       <div class="flex items-center justify-between mb-3">
                         <div class="flex items-center gap-2.5">
-                          <span class="w-2.5 h-2.5 rounded-full bg-purple-600"></span>
+                          <span class="event-color w-2.5 h-2.5 rounded-full" data-index="{{ forloop.counter0 }}"></span>
                           <p class="text-base font-medium text-gray-900">
                             من {{events.event_date}} الى {{events.event_date_end}}
                           </p>
@@ -224,7 +235,7 @@
               
                   <div class="border border-orange-200 rounded-xl">
                       <div class="grid grid-cols-7" id="calendar-grid">
-                          <!-- Calendar dates dynamically populated -->
+                            <!-- Calendar dates dynamically populated -->
                       </div>
                   </div>
               </div>
@@ -232,4 +243,117 @@
             </div>
           </div>
         </section>
+        <script>
+          const currentDate = new Date();
+// Define your events array with dynamic color placeholders
+const events = [
+  {% for event in events %}
+  {
+    date: "{{ event.event_date|date:'Y-m-d' }}",
+    title: "{{ event.title }}",
+    color: "", // Placeholder for color
+    index: {{ forloop.counter0 }} // Store the index to assign color dynamically
+  }
+  {% if not forloop.last %},{% endif %}
+  {% endfor %}
+];
+
+// Assign colors dynamically based on the index
+events.forEach((event) => {
+  if (event.index % 5 === 0) {
+    event.color = "bg-red-200"; 
+  } else if (event.index % 4 === 0) {
+    event.color = "bg-green-200"; 
+  } else if (event.index % 3 === 0) {
+    event.color = "bg-blue-200"; 
+  } else if (event.index % 2 === 0) {
+    event.color = "bg-yellow-200"; 
+  } else {
+    event.color = "bg-purple-200"; 
+  }
+});
+
+// Apply colors to each event's color span
+document.querySelectorAll('.event-color').forEach((span, index) => {
+  const event = events[index];
+  span.classList.add(event.color); 
+});
+
+console.log(events);
+
+// Get references to HTML elements
+const currentMonthEl = document.getElementById('current-month');
+const calendarGridEl = document.getElementById('calendar-grid');
+const prevMonthBtn = document.getElementById('prev-month');
+const nextMonthBtn = document.getElementById('next-month');
+
+// Utility function to get a Date object in the Saudi Arabia time zone
+function getSaudiDate(dateString) {
+  // Convert to Saudi Arabia time zone by using `toLocaleString` and then create a new Date
+  const localDate = new Date(new Date(dateString).toLocaleString("en-US", { timeZone: "Asia/Riyadh" }));
+  return {
+    year: localDate.getFullYear(),
+    month: localDate.getMonth(),
+    day: localDate.getDate()
+  };
+}
+
+// Function to render the calendar
+function renderCalendar(date) {
+  const month = date.getMonth();
+  const year = date.getFullYear();
+  currentMonthEl.textContent = date.toLocaleString('default', { month: 'long', year: 'numeric' });
+
+  const firstDayOfMonth = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  calendarGridEl.innerHTML = '';
+
+  // Fill in blank days before the first day of the month
+  for (let i = 0; i < firstDayOfMonth; i++) {
+    calendarGridEl.innerHTML += `<div class="p-2"></div>`;
+  }
+
+  // Render actual days and events
+  for (let i = 1; i <= daysInMonth; i++) {
+    const day = new Date(year, month, i).toISOString().split('T')[0];
+    const dayEvents = events.filter(event => event.date === day);
+
+    let eventMarkup = '';
+    dayEvents.forEach(event => {
+      eventMarkup += `<div class="text-sm font-medium ${event.color} rounded p-1 mt-1">${event.title}</div>`;
+    });
+
+    // Get the current date in Saudi Arabia timezone
+    const saudiCurrentDate = getSaudiDate(new Date());
+    const isToday = saudiCurrentDate.year === year && saudiCurrentDate.month === month && saudiCurrentDate.day === i;
+
+    calendarGridEl.innerHTML += `
+    <div 
+      class="calendar-cell flex flex-col border border-gray-50 items-center justify-center p-1 sm:p-5 text-center transition-colors duration-300 
+             ${isToday ? 'bg-primary-200' : 'bg-white'} hover:bg-orange-100"
+    >
+      <span class="text-md font-bold ${isToday ? 'bg-primary-200' : ''}">${i}</span>
+      <div class="event-list text-sm space-y-1 w-full">${eventMarkup || ''}</div>
+    </div>
+    `;
+  }
+}
+
+// Event listeners for previous and next month buttons
+prevMonthBtn.addEventListener('click', () => {
+  currentDate.setMonth(currentDate.getMonth() - 1);
+  renderCalendar(currentDate);
+});
+
+nextMonthBtn.addEventListener('click', () => {
+  currentDate.setMonth(currentDate.getMonth() + 1);
+  renderCalendar(currentDate);
+});
+
+// Initial render of the calendar
+renderCalendar(currentDate);
+
+          
+        </script>
         {% endblock content %}  

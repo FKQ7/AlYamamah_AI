@@ -11,9 +11,12 @@ class News(models.Model):
         ordering = ['-date_start']
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True, blank=True)
     img = models.ImageField(upload_to='news_images/')
-    title = models.CharField(max_length=200)
-    content = models.TextField(max_length=700)
-    date_start = models.DateField()
+    title = models.CharField(
+        _("Blog Title"), max_length=250,
+        null=False, blank=False
+    )
+    content = RichTextUploadingField()
+    date_start = models.DateField(auto_created=True, auto_now=True)
     date_end = models.DateField(null=True, blank=True)
     tag_1 = models.CharField(max_length=100)
     tag_2 = models.CharField(max_length=100, null=True, blank=True)

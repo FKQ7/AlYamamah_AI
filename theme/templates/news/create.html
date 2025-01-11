@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% load form_tags %}
+
+{% block content %}
+<div class="container mx-auto px-4 min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-lg lg:max-w-4xl bg-white p-8 rounded-lg shadow-lg" dir="rtl">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6 font-sans">إنشاء خبر جديد</h1>
+        <form method="post" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+            {{ form.media }}
+            
+            <!-- Title Field -->
+            <div class="space-y-2">
+                <label for="id_title" class="block text-gray-700 font-medium">عنوان الخبر</label>
+                {{ form.title|add_class:"w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500" }}
+                {% if form.title.errors %}
+                <p class="text-red-500 text-sm mt-1">{{ form.title.errors }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Image Upload Field -->
+            <div class="space-y-2">
+                <label for="id_img" class="block text-gray-700 font-medium">صورة مميزة</label>
+                {{ form.img|add_class:"w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500" }}
+                {% if form.img.errors %}
+                <p class="text-red-500 text-sm mt-1">{{ form.img.errors }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Content Field -->
+            <div class="space-y-2">
+                <label for="id_content" class="block text-gray-700 font-medium">المحتوى</label>
+                {{ form.content|add_class:"w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500" }}
+                {% if form.content.errors %}
+                <p class="text-red-500 text-sm mt-1">{{ form.content.errors }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Submit Button -->
+            <div class="flex justify-end">
+                <button type="submit" class="px-6 py-3 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition duration-300">
+                    نشر الخبر
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

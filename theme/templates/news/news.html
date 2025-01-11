@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block content %}
+        <section class="xl:px-28 mx-auto">
+            <div class="px-3">
+                <h1 class="text-right text-6xl font-bold">
+                    اخر الاخبار عن اليمامة
+                </h1>
+                <p class="text-right text-xl mt-2">
+                    لا تفوتك احدث اخبار مجتمعك
+                </p>
+                <div class="news-container">
+                    {% for item in news %}
+                    {% if forloop.counter|divisibleby:2 %}
+                        <!-- CARD-1 Design -->
+                        <a href="/news/{{ item.id }}" class="block">
+                            <div class="CARD-2 md:container mx-auto 2xl:px-20 mt-5">
+                                <div class="flex flex-row w-full hover:bg-[#eeede8] justify-start items-start border-y-2 border-black h-full md:h-[210px] lg:h-[250px] p-4" dir="rtl">
+                                    <div class="w-[92%] h-full">
+                                        <img src="{{ item.img.url }}" class="object-cover w-full h-[160px] md:h-[172px] lg:h-[210px] rounded-lg" alt="">
+                                    </div>
+                                    <div class="w-full">
+                                        <div class="md:pr-16 pr-2">
+                                            <h1 class="text-md md:text-2xl font-bold  hover:underline text-primary-600">
+                                                {{ item.title }}
+                                            </h1>
+                                            <div class="text-sm md:text-md lg:text-lg">
+                                                <!-- For medium and larger screens -->
+                                                <div class="hidden lg:inline md:block text-xs md:text-md lg:text-lg">
+                                                    <p>
+                                                        {{ item.content | truncatewords:30 | safe }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <p class="text-xs pt-2 font-light">
+                                                <div class="">
+                                                    <div class="border-t-2 border-black w-1/2 my-2"></div>
+                                                    <p class="text-xs mt-2">تاريخ النشرة {{ item.date_start }}</p>
+                                                    <p class="text-primary-600 text-sm font-normal">الناشر {{ item.author.first_name }} {{ item.author.last_name }}</p>
+                                                </div>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    {% else %}
+                        <!-- CARD-2 Design -->
+                        <a href="/news/{{ item.id }}" class="block">
+                            <div class="CARD-1 md:container mx-auto 2xl:px-20 mt-7 ">
+                                <div class="flex flex-row w-full justify-start items-start border-2 hover:bg-[#eeede8] border-primary-400 h-full md:h-[210px] lg:h-[250px] p-4 rounded-lg" dir="rtl">
+                                    <div class="w-full h-full flex-col justify-between">
+                                        <h1 class="text-lg hover:underline text-primary-600 md:text-2xl font-bold">
+                                            {{ item.title }}
+                                        </h1>
+                                        <div class="hidden lg:inline md:block text-xs md:text-md lg:text-lg">
+                                            <p>
+                                                {{ item.content | truncatewords:30 | safe }}
+                                            </p>
+                                        </div>
+                                        <p class="text-md pt-2 font-light">
+                                            <div class="">
+                                                <div class="border-t-2 border-black w-1/2 my-2"></div>
+                                                <p class="text-xs mt-2">تاريخ النشرة {{ item.date_start }}</p>
+                                                <p class="text-primary-600 text-sm font-normal">الناشر {{ item.author.first_name }} {{ item.author.last_name }}</p>
+                                            </div>
+                                        </p>
+                                    </div>
+                                    <div class="w-[92%] h-full">
+                                        <img src="{{ item.img.url }}" class="object-cover w-full h-[160px] md:h-[172px] lg:h-[210px] rounded-lg" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    {% endif %}
+                {% endfor %}
+                
+              </div>
+              
+            </div>
+        </section>
+      </div>
+      {% endblock %}

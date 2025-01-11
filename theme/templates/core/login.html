@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="bg-gray-50 max-w-2xl mx-auto p-5" dir="rtl">
+    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
+        <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900">
+            مجتمع اليمامة
+        </a>
+        <div class="w-full rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
+                    سجل دخولك
+                </h1>
+                <form class="space-y-4 md:space-y-6" action="{% url 'login' %}" method="POST">
+                    {% csrf_token %}
+                    <div>
+                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900">
+                            بريدك الالكتروني
+                        </label>
+                        <input 
+                            type="email" 
+                            dir="ltr"
+                            name="email" 
+                            id="email" 
+                            class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" 
+                            placeholder="name@company.com" 
+                            required>
+                    </div>
+                    <div>
+                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900">
+                            كلمة السر
+                        </label>
+                        <input 
+                            type="password" 
+                            name="password" 
+                            id="password" 
+                            dir="ltr"
+                            placeholder="••••••••" 
+                            class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" 
+                            required>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <a href="#" class="text-sm font-medium text-primary-600 hover:underline">
+                            هل نسيت كلمة السر؟
+                        </a>
+                    </div>
+                    {% if messages %}
+                        {% for message in messages %}
+                        <div class="mt-2 bg-red-100 border border-red-200 text-sm text-red-800 rounded-lg p-4 dark:bg-red-800/10 dark:border-red-900 dark:text-red-500" role="alert" tabindex="-1" aria-labelledby="hs-soft-color-danger-label">
+                            <span id="hs-soft-color-danger-label" class="font-bold">
+                                عذراً!
+                            </span>
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                    <button 
+                        type="submit" 
+                        class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                        تسجيل الدخول
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

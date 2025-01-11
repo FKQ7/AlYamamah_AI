@@ -6,45 +6,39 @@
 <section class="w-full h-full">
     <div class="max-w-3xl mx-auto text-right px-4">
         <h1 class="text-3xl font-bold" dir="rtl">
-            <span class="text-primary-600">مقال:</span>
-            {{blog.title|safe}}
+            <span class="text-primary-600">خبر:</span>
+            {{news.title|safe}}
         </h1>
         <div class="mt-4">
             <div class="flex items-center mt-5" dir="rtl">
 
                 <div class="pr-2 text-sm">
                     <span class="font-semibold text-primary-600 text-lg">
-                        الكاتب: {{blog.author.first_name}} {{blog.author.last_name}}
+                        الكاتب: {{news.author.first_name}} {{news.author.last_name}}
                     </span>
                     
                 </div>
             </div>
             <div class="my-5">
                 <p>
-                {{blog.date}}{{blog.date_start}}  :تاريخ النشرة
+                {{news.date}}{{news.date_start}}  :تاريخ النشرة
                 </p>
             </div>
             <div class="content">
                 <div>
-                    <img src="{{ blog.img.url}}" class="w-full h-[240px] md:h-[450px] object-cover rounded-lg" alt="blog image">
+                    <img src="{{ news.img.url}}" class="w-full h-[240px] md:h-[450px] object-cover rounded-lg" alt="blog image">
                 </div>
                 <h1 class="text-3xl font-bold py-5" dir="rtl">
-                    {{blog.title|safe}}
+                    {{news.title|safe}}
                 </h1>
-                <p class="inline text-xl font-semibold" style="background-color: #F8DF66;">
-                    {{blog.author.first_name}} {{blog.author.last_name}}
-                </p>
-                <div class="h-0.5 bg-black w-full mt-5"></div>
-
+                <div class="h-0.5 bg-black w-full"></div>
                 <div class="mt-4 text-lg bg-[#EFEDE8] p-3 rounded-lg blog-content">
-
-                    <p class="">{{ blog.content|safe }}</p>
+                    <p class="inline text-xl font-semibold underline" style="background-color: #F8DF66;">
+                        {{news.author.first_name}} {{news.author.last_name}}
+                    </p>
+                    <p class="">{{ news.content|safe }}</p>
 
                     <style>
-                        .blog-content p {
-                            line-height: 1.8; /* Adjust this value for desired spacing */
-                            margin-top: 1rem; /* Adds spacing between paragraphs */
-                        }
                         .blog-content a {
                             color: #f97316; /* Orange color for links */
                             text-decoration: underline;
@@ -58,8 +52,7 @@
                             height: auto !important; /* Maintains the aspect ratio */
                             margin: 10px auto !important; /* Centers the image and adds spacing */
                             border-radius: 8px !important; /* Optional: Rounded corners */
-                            border-radius: 8px; /* Optional: Adds rounded corners for better aesthetics */
-                        }
+                        }rder-radius: 8px; /* Optional: Adds rounded corners for better aesthetics */
                         }
                     </style>
                 </div>

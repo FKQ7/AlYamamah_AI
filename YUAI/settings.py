@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'theme',
     'django_browser_reload',
     'ckeditor',
+    'ckeditor_uploader',
 ]
 
 LANGUAGE_CODE = 'en'
@@ -143,6 +144,7 @@ STATIC_URL = 'static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+LOGIN_REDIRECT_URL = "/"  # new
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -163,9 +165,10 @@ CKEDITOR_CONFIGS = {
     'default':
         {
             'toolbar': 'full',
+            'height': 300,
             'width': 'auto',
-            'extraPlugins': ','.join([
-                'codesnippet',
-            ]),
+            'allowedContent': True,
+            'extraPlugins': ','.join(['image2']),  # For enhanced image handling
+
         },
 }
