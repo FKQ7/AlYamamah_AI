@@ -39,6 +39,10 @@
                     <p class="">{{ news.content|safe }}</p>
 
                     <style>
+                        .blog-content p {
+                            line-height: 1.8; /* Adjust this value for desired spacing */
+                            margin-top: 1rem; /* Adds spacing between paragraphs */
+                        }
                         .blog-content a {
                             color: #f97316; /* Orange color for links */
                             text-decoration: underline;
@@ -52,8 +56,9 @@
                             height: auto !important; /* Maintains the aspect ratio */
                             margin: 10px auto !important; /* Centers the image and adds spacing */
                             border-radius: 8px !important; /* Optional: Rounded corners */
-                        }rder-radius: 8px; /* Optional: Adds rounded corners for better aesthetics */
+                            border-radius: 8px; /* Optional: Adds rounded corners for better aesthetics */
                         }
+                        
                     </style>
                 </div>
                 <div class="h-0.5 bg-black w-full"></div>

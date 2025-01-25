@@ -168,8 +168,8 @@
           </div>
       </section>
       <section class="my-20 container mx-auto md:my-60 h-full md:h-full xl:h-full">
-        <div class="lg:px-12 lg:px-2">
-            <div class="w-full max-w-7xl mx-auto px-2 ">
+        <div class="">
+            <div class="w-full max-w-7xl mx-auto px-2">
               <h2 class="text-6xl font-bold xl:text-left text-center text-gray-900 mb-4">
                 متى الحدث؟
               </h2>
@@ -180,7 +180,7 @@
                 
                 <div class="col-span-12 bg-gray-50 p-2 rounded-2xl xl:col-span-5">
                 {% for events in events %}
-                  <div class="flex gap-5 mb-2 flex-col" dir="rtl">
+                  <div class="flex gap-5 flex-col" dir="rtl">
                     <div class="p-6 xl:mt-1 rounded-xl bg-white border-[1px] border-primary-400">
                       <div class="flex items-center justify-between mb-3">
                         <div class="flex items-center gap-2.5">
@@ -190,11 +190,11 @@
                           </p>
                         </div>
                       </div>
-                      <h6 class="text-2xl leading-8 font-semibold text-black mb-1">
+                      <h6 class="text-xl leading-8 font-semibold text-black mb-1">
                         {{events.title}}
 
                       </h6>
-                      <p class="text-md font-normal text-gray-600">
+                      <p class="text-base font-normal text-gray-600">
                          {{events.content}}
                       </p>
                     </div>

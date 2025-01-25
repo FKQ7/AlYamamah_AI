@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-        <section class="hidden xl:container xl:block xl:mx-auto px-20 xl:blogs xl:h-full mb-16">
+        <section class="hidden xl:container xl:block 2xl:px-36 xl:mx-auto px-20 xl:blogs xl:h-full mb-16">
           <div class="text-right mx-auto " dir="rtl">
             <p class="px-5 pt-10 xl:pt-0 text-6xl font-bold">
               مقالات مختارة لك!
@@ -10,9 +10,9 @@
              </p>
           </div>
 
-          <div class="grid grid-cols-3 h-[850px] grid-rows-2 gap-3 mx-auto" dir="rtl">
+          <div class="grid grid-cols-3 h-[800px] grid-rows-2 gap-3 mx-auto " dir="rtl">
             <div class="1-rouned hover:bg-[#eeede8] rounded-lg row-span-2 m-0 p-0 col-start-3 row-start-1 border-4 border-primary-400 text-text">
-              <div class="w-full flex flex-col justify-between h-[740px] 2xl:h-[860px] p-4">
+              <div class="w-full flex flex-col justify-between h-[740px] p-4">
                 <a href="/blog/{{header.0.id}}" class="block w-full h-full">
                   <img class="w-full h-[60%] rounded-lg object-cover" src="{{header.0.img.url}}" alt="">
                   <div class="flex-row justify-between">
@@ -42,7 +42,7 @@
               </div>
               <div class="2-wide rounded-lg hover:bg-[#eeede8] col-span-2 col-start-1 row-start-1 w-full h-full text-text">
                 <a href="/blog/{{header.1.id}}" class="block">
-                  <div class="flex border-4 border-primary-400 rounded-lg flex-row justify-between p-4 xl:h-[381px] 2xl:h-[424px]">
+                  <div class="flex border-4 border-primary-400 rounded-lg flex-row justify-between p-4 xl:h-[381px]">
                     <img class="w-[50%] h-full rounded-lg object-cover" src="{{header.1.img.url}}" alt="ROUNDED NOT WORKING">
                     <div class="flex flex-col justify-between p-2 pr-4 w-full h-full">
                       <!-- Title -->
@@ -71,7 +71,7 @@
               </div>
             <a href="/blog/{{header.2.id}}" class="block">
             <div class="3- hover:bg-[#eeede8] rounded-lg row-start-2 border-4 border-primary-400 w-full h-[334px] text-text h-full h-full p-4">
-                <img class="mb-4 h-[209px] 2xl:h-[252px] w-full rounded object-cover" src="{{header.2.img.url}}" alt="">
+                <img class="mb-4 h-[209px] w-full rounded object-cover" src="{{header.2.img.url}}" alt="">
                     <!-- Title -->
                     <h1 class="7-words font-bold hover:underline text-primary-600 text-md sm:text-xl lg:text-lg xl:text-right leading-snug mb-2">
                       <a href="/blog/{{header.2.id}}">{{header.2.title}}</a>
@@ -79,7 +79,7 @@
                     <!-- Description -->
                     <div class="mb-4 text-right">
                       <p class="10-words text-right inline text-sm sm:text-md ">
-                        {{header.2.content | truncatewords:10| safe}}
+                        {{header.2.content | truncatewords:7| safe}}
                       </p>
                     </div>
                     <!-- Author and Date -->
@@ -96,7 +96,7 @@
           </a>
           <a href="/blog/{{header.3.id}}">
             <div class="3- rounded-lg row-start-2 hover:bg-[#eeede8] border-4 border-primary-400 w-full h-[334px] text-text h-full h-full p-4">
-              <img class="mb-4 h-[209px] 2xl:h-[252px] w-full rounded object-cover" src="{{header.3.img.url}}" alt="">
+              <img class="mb-4 h-[209px] w-full rounded object-cover" src="{{header.3.img.url}}" alt="">
                   <!-- Title -->
                   <h1 class="7-words hover:underline font-bold text-primary-600 text-md sm:text-xl lg:text-lg xl:text-right leading-snug mb-2">
                     <a href="/blog/{{header.3.id}}">{{header.3.title}}</a>
@@ -122,7 +122,7 @@
         </div>
         </section>
 
-        <section class="container xl:border-y-4 xl:border-black mx-auto p-5 md:px-24 lg:px-52 xl:px-72 2xl:px-[420px]" dir="rtl">
+        <section class="container xl:border-y-4 xl:border-black mx-auto p-5" dir="rtl">
           <div>
             <p class="text-7xl font-bold">
               مقالات
@@ -130,14 +130,20 @@
             <p class="text-2xl font-normal text-gray-600 mb-8 mt-3">
               مقالات مختارة لك و احدث مقالات مختارة لك
             </p>
+            {% if user.is_authenticated %}
+              <a href="/blog/create" class="text-white font-bold text-xl border-2 bg-primary-600 rounded-md p-3 hover:bg-primary-500">اضافة مقال</a>
+            {% else %}
+
+            {% endif %}
           </div>
+          <div class="md:grid md:grid-cols-2 xl:grid-cols-3 mt-5 gap-8">
           {% for blog in blogs %}
             <a href="/blog/{{blog.id}}" class="block">
-              <div class="mt-5">
-                <div class="w-full h-full hover:bg-[#eeede8] rounded-md xl:rounded-xl mt-2">
+              <div class="">
+                <div class="w-full h-full md:h-[590px] lg:h-[620px] hover:bg-[#eeede8] rounded-md xl:rounded-xl mt-2">
                   <div class="w-full -white h-full p-5 border-4 border-primary-400 text-text rounded-lg shadow-md">
                     <!-- Image Section -->
-                    <img class="w-full h-[200px] rounded-xl object-cover mb-3 md:h-[340px]" src="{{blog.img.url}}" alt="">
+                    <img class="w-full h-[200px] md:h-[270px] lg:h-[300px] 2xl:h-[300px] rounded-xl object-cover mb-3 md:h-[340px]" src="{{blog.img.url}}" alt="">
                     <!-- Content Section -->
                     <div class="flex flex-col justify-start pr-2 w-full">
                       <!-- Title -->
@@ -147,7 +153,7 @@
                       <!-- Description -->
                       <div class="text-right lg:pb-5">
                         <p class="whatever-words prose prose-sm prose-gray rtl text-right text-right text-gray-500 text-md md:text-lg inline mb-4 lg:text-md">
-                          {{blog.content | truncatewords:30 | safe }}
+                          {{blog.content | truncatewords:20 | safe }}
                         </p>
                       </div>
                       <!-- Author and Date -->
@@ -166,6 +172,7 @@
               </div>
             </a>
           {% endfor %}
+        </div>
         </section>
         
       </div>

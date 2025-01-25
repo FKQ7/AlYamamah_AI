@@ -28,5 +28,11 @@ Duration: 1-Week
         3. news
         4. blogs
         5. News
-        6. Events Calendar
-        7. Footer
+        6. Footer
+
+What to fix: 
+- Dark mode
+- Redesign the Blog page
+- fix the ipad for the home page, news
+- Calendar
+- Grid for the blog

@@ -8,16 +8,23 @@ def index(request):
     events = Event.objects.all().order_by('event_date')
     for blog in blogs:
         blog.content = re.sub(r'<img[^>]*>', '', blog.content)
+        blog.content = re.sub(r'<a[^>]*>|</a>', '', blog.content)
+        blog.content = re.sub(r'<br[^>]*>|</br>', '', blog.content)
+        blog.content = re.sub(r'<p>\s*&nbsp;\s*</p>', '', blog.content)
     # Clean up content for news
     for item in news:
         # Remove unwanted tags (e.g., <img>) if they exist
         item.content = re.sub(r'<img[^>]*>', '', item.content)
-        
+        item.content = re.sub(r'<a[^>]*>|</a>', '', item.content)
+        item.content = re.sub(r'<br[^>]*>|</br>', '', item.content)
+        item.content = re.sub(r'<p>\s*&nbsp;\s*</p>', '', item.content)
+
+
         # Sanitize content to ensure safe HTML
         item.content = bleach.clean(
-            item.content, 
-            tags=['b', 'i', 'u', 'a', 'p', 'br', 'strong', 'em'],  # Allow these tags
-            attributes={'a': ['href']},  # Allow 'href' on <a> tags
+            item.content,
+            tags=['b', 'i', 'u', 'p', 'br', 'em'],  # Allow only these tags
+            attributes={},  # Disallow all attributes
             strip=True  # Remove all disallowed tags completely
         )
     return render(request, 'core/index.html', {'news': news, 'blogs': blogs, 'events':events})
@@ -28,12 +35,17 @@ def news(request):
         if item.content:
             # Remove unwanted tags (e.g., <img>)
             item.content = re.sub(r'<img[^>]*>', '', item.content)
-            
+            item.content = re.sub(r'<a[^>]*>|</a>', '', item.content)
+            item.content = re.sub(r'<br[^>]*>|</br>', '', item.content)
+            item.content = re.sub(r'<p>\s*&nbsp;\s*</p>', '', item.content)
+
+
             # Strip all HTML tags, retaining plain text only
             item.content = bleach.clean(
-                item.content, 
-                tags=[],  # No tags allowed
-                strip=True  # Remove all tags entirely
+                item.content,
+                tags=['b', 'i', 'u', 'p', 'br', 'em'],  # Allow only these tags
+                attributes={},  # Disallow all attributes
+                strip=True  # Remove all disallowed tags completely
             )
     return render(request, 'news/news.html', {'news': news})
 from django.contrib.auth import authenticate
@@ -45,8 +57,16 @@ def blog(request):
     all_blogs = Blogs.objects.all().order_by('-date')
     for blog in all_blogs:
         blog.content = re.sub(r'<img[^>]*>', '', blog.content)
+        blog.content = re.sub(r'<a[^>]*>|</a>', '', blog.content)
+        blog.content = re.sub(r'<p>\s*&nbsp;\s*</p>', '', blog.content)
+
+
     for blog in header_blogs:
         blog.content = re.sub(r'<img[^>]*>', '', blog.content)
+        blog.content = re.sub(r'<a[^>]*>|</a>', '', blog.content)
+        blog.content = re.sub(r'<p>\s*&nbsp;\s*</p>', '', blog.content)
+
+
     return render(request, 'blog/blog.html', {'header': header_blogs, 'blogs': all_blogs})
 
 from django.shortcuts import get_object_or_404

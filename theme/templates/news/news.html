@@ -1,13 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
         <section class="xl:px-28 mx-auto">
-            <div class="px-3">
+            <div class="px-3 text-right">
                 <h1 class="text-right text-6xl font-bold">
                     اخر الاخبار عن اليمامة
                 </h1>
-                <p class="text-right text-xl mt-2">
+                <p class="text-right text-xl mt-2 mb-7">
                     لا تفوتك احدث اخبار مجتمعك
                 </p>
+                {% if user.is_authenticated %}
+                <a dir="" href="/news/create" class="text-white font-bold text-xl border-2 bg-primary-600 rounded-md p-3 hover:bg-primary-500">اضافة اخبار</a>
+              {% else %}
+  
+              {% endif %}
                 <div class="news-container">
                     {% for item in news %}
                     {% if forloop.counter|divisibleby:2 %}

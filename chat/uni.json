@@ -1,68 +1,66 @@
 {
     "introduction": "You are a virtual assistant dedicated to guiding users within the university campus. Your role is to provide directions, building details, navigation tips, and essential campus information.",
-    "campus_structure": {
-        "layout": {
-            "gyms": [
-                {
-                    "type": "Men's gym",
-                    "location": "Located on the left side of the campus in the first building."
-                },
-                {
-                    "type": "Women's gym",
-                    "location": "Located on the left side of the campus in the second building."
-                }
-            ],
-            "main_building": {
-                "description": "This building has five floors, including the ground floor.",
-                "classroom_format": "Classrooms are labeled in the format: LETTER-FLOOR-CLASS NUMBER.",
-                "sides": {
-                    "A": "Right side of the main building.",
-                    "B": "Left side of the main building."
-                },
-                "examples": [
-                    {
-                        "classroom": "A-24",
-                        "description": "Right side, 1st floor, classroom 4."
-                    },
-                    {
-                        "classroom": "B-11",
-                        "description": "Left side, ground floor, classroom 1."
-                    },
-                    {
-                        "classroom": "A-54",
-                        "description": "Invalid, as the building has only five floors."
-                    }
-                ]
+    "layout": {
+        "gyms": [
+            {
+                "type": "Men's gym",
+                "location": "Located on the left side of the campus in the first building."
             },
-            "big_auditorium": "Located on the right side of the campus in the first large building.",
-            "library": {
-                "location": "Located in the main building on the 2nd floor.",
-                "features": [
-                    "Quiet study area",
-                    "Group discussion rooms",
-                    "Computer access"
-                ]
-            },
-            "cafeteria": {
-                "location": "Situated in the center of the campus.",
-                "hours": "Open from 7:00 AM to 7:00 PM.",
-                "options": [
-                    "Vegetarian",
-                    "Non-vegetarian"
-                ]
-            },
-            "student_services": {
-                "location": "Ground floor of the main building.",
-                "features": [
-                    "Academic advising",
-                    "Registration",
-                    "Financial aid"
-                ]
-            },
-            "outdoor_spaces": {
-                "central_park": "Includes shaded seating areas.",
-                "sports_field": "A sports field for football, basketball, and running tracks is located behind the gym buildings."
+            {
+                "type": "Women's gym",
+                "location": "Located on the left side of the campus in the second building."
             }
+        ],
+        "main_building": {
+            "description": "This building has five floors, including the ground floor.",
+            "classroom_format": "Classrooms are labeled in the format: LETTER-FLOOR-CLASS NUMBER.",
+            "sides": {
+                "A": "Right side of the main building.",
+                "B": "Left side of the main building."
+            },
+            "examples": [
+                {
+                    "classroom": "A-24",
+                    "description": "Right side, 1st floor, classroom 4."
+                },
+                {
+                    "classroom": "B-11",
+                    "description": "Left side, ground floor, classroom 1."
+                },
+                {
+                    "classroom": "A-54",
+                    "description": "Invalid, as the building has only five floors."
+                }
+            ]
+        },
+        "big_auditorium": "Located on the right side of the campus in the first large building.",
+        "library": {
+            "location": "Located in the main building on the 2nd floor.",
+            "features": [
+                "Quiet study area",
+                "Group discussion rooms",
+                "Computer access"
+            ]
+        },
+        "cafeteria": {
+            "location": "Situated in the center of the campus.",
+            "hours": "Open from 7:00 AM to 7:00 PM.",
+            "options": [
+                "Vegetarian",
+                "Non-vegetarian"
+            ]
+        },
+        "student_services": {
+            "location": "Ground floor of the main building.",
+            "features": [
+                "Academic advising",
+                "Registration",
+                "Financial aid"
+            ]
+        },
+        "outdoor_spaces": {
+            "central_park": "Includes shaded seating areas.",
+            "sports_field": "A sports field for football, basketball, and running tracks is located behind the gym buildings."
         },
         "additional_features": {
             "wifi_access": {
@@ -72,33 +70,40 @@
             "campus_security": {
                 "location": "Security office located near the main gate."
             }
+        },
+        "rules_for_classroom_format": {
+            "first_letter": "Specifies the side of the main building (A or B).",
+            "number_after_letter": "Indicates the floor (1 = ground floor, 2 = 1st floor, etc.).",
+            "last_digit": "Identifies the classroom on that floor."
         }
     },
-    "rules_for_classroom_format": {
-        "first_letter": "Specifies the side of the main building (A or B).",
-        "number_after_letter": "Indicates the floor (1 = ground floor, 2 = 1st floor, etc.).",
-        "last_digit": "Identifies the classroom on that floor."
-    },
-    "additional_note": "Provide accurate, friendly, and concise directions or information based on the user's query. For more information, visit https://yu.edu.sa/",
-
-    "Events": {
-        "upcoming_events": {
-            "Gaming Event": {
+    "events_and_news": {
+        "upcoming_events": [
+            {
                 "title": "Gaming Event",
                 "date": "2024-12-30",
-                "till date": "2024-12-31",
+                "till_date": "2024-12-31",
                 "time": "10:00 AM",
-                "till time": "11:00 AM",
+                "till_time": "11:00 AM",
                 "location": "First Floor"
             },
-        "Gaming Event 2": {
-            "title": "Gaming Event 2",
-            "date": "2025-12-30",
-            "till date": "2025-12-31",
-            "time": "10:00 AM",
-            "till time": "11:00 AM",
-            "location": "First Floor"
+            {
+                "title": "Gaming Event 2",
+                "date": "2025-12-30",
+                "till_date": "2025-12-31",
+                "time": "10:00 AM",
+                "till_time": "11:00 AM",
+                "location": "First Floor"
             }
-        }
+        ]
+    },
+    "question_and_answer": {
+        "questions_and_answers": [
+            {
+                "question": "متى ينتهي تسجيل المواد؟",
+                "answer": "السبت الساعه 12 الليل"
+            }
+        ],
+        "additional_note": "Provide accurate, friendly, and concise directions or information based on the user's query. For more information, visit https://yu.edu.sa/"
     }
 }

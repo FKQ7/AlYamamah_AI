@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mx-auto px-4 my-44 md:my-72 flex items-center justify-center">
+    <div class="w-full max-w-lg lg:max-w-4xl bg-white p-8 rounded-lg shadow-lg" dir="rtl">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6 font-sans">
+            اضافة سوال
+        </h1>
+        {% if success %}
+        <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+            <span class="font-medium">
+                تم اضافة السوال
+            </span>
+          </div>
+        {% endif %}
+        <form method="post" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+            <!-- Title Field -->
+            <div class="space-y-2">
+                <label for="question" class="block text-gray-700 font-medium">
+                    السوال   
+                </label>
+                <input id="question" name="question" type="text" placeholder="متى ينتهي التسجيل؟" class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500">
+            </div>
+        
+            <!-- Content Field -->
+            <div class="space-y-2">
+                <label for="answer" class="block text-gray-700 font-medium">
+                    الجواب
+                </label>
+                <textarea id="answer" name="answer" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 " placeholder="ينتهي الخميس..."></textarea>
+            </div>
+        
+            <!-- Submit Button -->
+            <div class="flex justify-end">
+                <button type="submit" class="px-6 py-3 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition duration-300">
+                    نشر الجواب
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

@@ -46,8 +46,8 @@
     60%, 100% { content: '...' }
   }
 </style>
-</head>
 <body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+
 <div class="chat p-5 container mx-auto xl:px-64">
   <div class="relative w-full h-[700px] bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-lg">
     <!-- Header -->
@@ -121,8 +121,15 @@
       </form>
     </div>
   </div>
+  
 </div>
+<div class="text-center mt-5">
+  {% if user.is_authenticated %}
+  <a dir="" href="/chat/inform" class="text-white text-center font-bold text-xl border-2 bg-primary-600 rounded-md p-3 hover:bg-primary-500">اضافة معلومة</a>
+{% else %}
 
+{% endif %}
+</div>
 <script>
     const messages = document.querySelector('.messages');
     const messageForm = document.querySelector('.message-form');
