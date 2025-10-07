@@ -1,126 +1,96 @@
 {% extends "base.html" %}
 {% block content %}
-        <section class="hidden xl:container xl:block 2xl:px-36 xl:mx-auto px-20 xl:blogs xl:h-full mb-16">
-          <div class="text-right mx-auto " dir="rtl">
-            <p class="px-5 pt-10 xl:pt-0 text-6xl font-bold">
-              مقالات مختارة لك!
-            </p>
-            <p class="px-5 pt-5 xl:pt-3 pb-10 xl:pb-5 text-2xl">
-              لا تفوتك احدث مقالاتنا في مجتمعك
-             </p>
-          </div>
+    <section class="hidden xl:container xl:block 2xl:px-36 xl:mx-auto px-20 xl:blogs h-full mb-16">
+      <div class="text-right mx-auto" dir="rtl">
+        <p class="px-5 pt-10 xl:pt-0 text-6xl font-bold">مقالات مختارة لك!</p>
+        <p class="px-5 pt-5 xl:pt-3 pb-10 xl:pb-5 text-2xl">لا تفوتك احدث مقالاتنا في مجتمعك</p>
+      </div>
 
-          <div class="grid grid-cols-3 h-[800px] grid-rows-2 gap-3 mx-auto " dir="rtl">
-            <div class="1-rouned hover:bg-[#eeede8] rounded-lg row-span-2 m-0 p-0 col-start-3 row-start-1 border-4 border-primary-400 text-text">
-              <div class="w-full flex flex-col justify-between h-[740px] p-4">
-                <a href="/blog/{{header.0.id}}" class="block w-full h-full">
-                  <img class="w-full h-[60%] rounded-lg object-cover" src="{{header.0.img.url}}" alt="">
-                  <div class="flex-row justify-between">
-                    <h1 class="pt-4 hover:underline text-primary-600 font-bold text-md sm:text-xl lg:text-2xl xl:text-right leading-snug mb-2">
-                      {{header.0.title}}
-                    </h1>
-                    <!-- Description -->
-                    <div class="mb-4 text-right">
-                      <p class="text-right inline text-md">
-                        {{header.0.content | truncatewords:30 | safe}}
-                      </p>
-                    </div>
-                  </div>
-                  <!-- Author and Date -->
-                  <div class="flex">
-                    <img class="rounded-full w-[24px] h-[24px] ml-2 object-cover" src="https://placehold.co/300x300" alt="">
-                    <p class="text-right text-sm sm:text-md text-primary-500">
-                      {{header.0.author.first_name}} {{header.0.author.last_name}}
-                    </p>
-                  </div>
-                  <p class="text-sm text-right pb-2 sm:text-lg text-gray-400">
-                    تاريخ النشر: {{header.0.date}}
-                  </p>
-                </a>
+      <div class="grid grid-cols-3 grid-rows-2 gap-4 h-[800px] mx-auto" dir="rtl">
+        
+        {% if header.0 %}
+        <a href="/blog/{{ header.0.id }}" class="block p-4 transition-colors duration-300 hover:bg-[#eeede8] rounded-lg row-span-2 col-start-3 row-start-1 border-4 border-primary-400 text-text">
+          <div class="flex flex-col h-full ">
+            <img class="w-full h-[60%] rounded-lg object-cover" src="{{ header.0.img.url }}" alt="صورة مقال {{ header.0.title }}">
+            
+            <div class="flex flex-col flex-grow pt-4 justify-between">
+                <h1 class="font-bold hover:underline text-primary-600 text-2xl leading-snug">{{ header.0.title }}</h1>
+                <p class="text-right text-md md:text-lg ">{{ header.0.content|truncatewords:30|safe }}</p>
+              <div>
+                 <div class="flex items-center mt-2">
+                  <img class="rounded-full w-6 h-6 ml-2 object-cover" src="https://placehold.co/300x300" alt="صورة الكاتب">
+                  <p class="text-md text-primary-500">{{ header.0.author.first_name }} {{ header.0.author.last_name }}</p>
+                </div>
+                  <p class="text-sm text-right text-gray-400 mt-1">تاريخ النشر: {{ header.0.date }}</p>
               </div>
-              
-              </div>
-              <div class="2-wide rounded-lg hover:bg-[#eeede8] col-span-2 col-start-1 row-start-1 w-full h-full text-text">
-                <a href="/blog/{{header.1.id}}" class="block">
-                  <div class="flex border-4 border-primary-400 rounded-lg flex-row justify-between p-4 xl:h-[381px]">
-                    <img class="w-[50%] h-full rounded-lg object-cover" src="{{header.1.img.url}}" alt="ROUNDED NOT WORKING">
-                    <div class="flex flex-col justify-between p-2 pr-4 w-full h-full">
-                      <!-- Title -->
-                      <h1 class="font-bold hover:underline text-primary-600 text-md sm:text-xl lg:text-xl xl:text-2xl text-right leading-snug mb-2">
-                        {{header.1.title}}
-                      </h1>
-                      <!-- Description -->
-                      <div class="mb-4 text-right">
-                        <p class="text-right inline text-md">
-                          {{header.1.content | truncatewords:50 | safe}}
-                        </p>
-                      </div>
-                      <!-- Author and Date -->
-                      <div class="flex">
-                        <img class="rounded-full w-[24px] h-[24px] ml-2 object-cover" src="https://placehold.co/300x300" alt="">
-                        <p class="text-right text-sm sm:text-md text-primary-500">
-                          {{header.1.author.first_name}} {{header.1.author.last_name}}
-                        </p>
-                      </div>
-                      <p class="text-sm text-right sm:text-md md:text-lg text-gray-400 pr-4">
-                        تاريخ النشر: {{header.1.date}}
-                      </p>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            <a href="/blog/{{header.2.id}}" class="block">
-            <div class="3- hover:bg-[#eeede8] rounded-lg row-start-2 border-4 border-primary-400 w-full h-[334px] text-text h-full h-full p-4">
-                <img class="mb-4 h-[209px] w-full rounded object-cover" src="{{header.2.img.url}}" alt="">
-                    <!-- Title -->
-                    <h1 class="7-words font-bold hover:underline text-primary-600 text-md sm:text-xl lg:text-lg xl:text-right leading-snug mb-2">
-                      <a href="/blog/{{header.2.id}}">{{header.2.title}}</a>
-                    </h1>
-                    <!-- Description -->
-                    <div class="mb-4 text-right">
-                      <p class="10-words text-right inline text-sm sm:text-md ">
-                        {{header.2.content | truncatewords:7| safe}}
-                      </p>
-                    </div>
-                    <!-- Author and Date -->
-                    <div class="flex">
-                      <img class="rounded-full w-[24px] h-[24px] ml-2 object-cover" src="https://placehold.co/300x300" alt="">
-                      <p class="text-right text-sm sm:text-md text-primary-500">
-                        {{header.2.author.first_name}} {{header.2.author.last_name}}
-                      </p>
-                    </div>
-                    <p class="text-sm text-right sm:text-md text-gray-400">
-                      تاريخ النشر: {{header.2.date}}
-                    </p>
             </div>
-          </a>
-          <a href="/blog/{{header.3.id}}">
-            <div class="3- rounded-lg row-start-2 hover:bg-[#eeede8] border-4 border-primary-400 w-full h-[334px] text-text h-full h-full p-4">
-              <img class="mb-4 h-[209px] w-full rounded object-cover" src="{{header.3.img.url}}" alt="">
-                  <!-- Title -->
-                  <h1 class="7-words hover:underline font-bold text-primary-600 text-md sm:text-xl lg:text-lg xl:text-right leading-snug mb-2">
-                    <a href="/blog/{{header.3.id}}">{{header.3.title}}</a>
-                  </h1>
-                  <!-- Description -->
-                  <div class="mb-4 text-right">
-                    <p class="10-words text-right inline text-sm sm:text-md ">
-                      {{header.3.content | truncatewords:7| safe}}
-                    </p>
-                  </div>
-                  <!-- Author and Date -->
-                  <div class="flex">
-                    <img class="rounded-full w-[24px] h-[24px] ml-2 object-cover" src="https://placehold.co/300x300" alt="">
-                    <p class="text-right text-sm sm:text-md text-primary-500">
-                      {{header.3.author.first_name}} {{header.3.author.last_name}}
-                    </p>
-                  </div>
-                  <p class="text-sm text-right sm:text-md text-gray-400">
-                    تاريخ النشر: {{header.3.date}}
-                  </p>
           </div>
         </a>
-        </div>
-        </section>
+        {% endif %}
+
+        {% if header.1 %}
+        <a href="/blog/{{ header.1.id }}" class="block p-4 transition-colors duration-300 hover:bg-[#eeede8] rounded-lg col-span-2 col-start-1 row-start-1 border-4 border-primary-400 text-text">
+          <div class="flex flex-row h-full gap-4">
+            <img class="w-1/2 h-full rounded-lg object-cover" src="{{ header.1.img.url }}" alt="صورة مقال {{ header.1.title }}">
+            
+            <div class="flex flex-col flex-grow pt-4 justify-between">
+                <h1 class="font-bold hover:underline text-primary-600 text-2xl leading-snug">{{ header.1.title }}</h1>
+                <p class="text-right text-md md:text-lg ">{{ header.1.content|truncatewords:30|safe }}</p>
+              <div>
+                 <div class="flex items-center mt-2">
+                  <img class="rounded-full w-6 h-6 ml-2 object-cover" src="https://placehold.co/300x300" alt="صورة الكاتب">
+                  <p class="text-md text-primary-500">{{ header.1.author.first_name }} {{ header.1.author.last_name }}</p>
+                </div>
+                  <p class="text-sm text-right text-gray-400 mt-1">تاريخ النشر: {{ header.1.date }}</p>
+              </div>
+            </div>
+          </div>
+        </a>
+        {% endif %}
+
+        {% if header.2 %}
+        <a href="/blog/{{ header.2.id }}" class="block p-4 transition-colors duration-300 hover:bg-[#eeede8] rounded-lg col-start-1 row-start-2 border-4 border-primary-400 text-text">
+          <div class="flex flex-col h-full">
+            <img class="w-full h-3/5 rounded-lg object-cover mb-4" src="{{ header.2.img.url }}" alt="صورة مقال {{ header.2.title }}">
+
+            <div class="flex flex-col justify-between flex-grow">
+                <div> <h1 class="font-bold hover:underline text-primary-600 text-xl leading-snug mb-2">{{ header.2.title }}</h1>
+                    <p class="text-right text-sm">{{ header.2.content|truncatewords:10|safe }}</p>
+                </div>
+                <div class="mt-2"> <div class="flex items-center">
+                        <img class="rounded-full w-6 h-6 ml-2 object-cover" src="https://placehold.co/300x300" alt="صورة الكاتب">
+                        <p class="text-md text-primary-500">{{ header.2.author.first_name }} {{ header.2.author.last_name }}</p>
+                    </div>
+                    <p class="text-sm text-right text-gray-400 mt-1">تاريخ النشر: {{ header.2.date }}</p>
+                </div>
+            </div>
+          </div>
+        </a>
+        {% endif %}
+        
+        {% if header.3 %}
+        <a href="/blog/{{ header.3.id }}" class="block p-4 transition-colors duration-300 hover:bg-[#eeede8] rounded-lg col-start-2 row-start-2 border-4 border-primary-400 text-text">
+            <div class="flex flex-col h-full">
+                <img class="w-full h-3/5 rounded-lg object-cover mb-4" src="{{ header.3.img.url }}" alt="صورة مقال {{ header.3.title }}">
+                
+                <div class="flex flex-col justify-between flex-grow">
+                    <div> <h1 class="font-bold hover:underline text-primary-600 text-xl leading-snug mb-2">{{ header.3.title }}</h1>
+                        <p class="text-right text-sm">{{ header.3.content|truncatewords:10|safe }}</p>
+                    </div>
+                    <div class="mt-2"> <div class="flex items-center">
+                            <img class="rounded-full w-6 h-6 ml-2 object-cover" src="https://placehold.co/300x300" alt="صورة الكاتب">
+                            <p class="text-md text-primary-500">{{ header.3.author.first_name }} {{ header.3.author.last_name }}</p>
+                        </div>
+                        <p class="text-sm text-right text-gray-400 mt-1">تاريخ النشر: {{ header.3.date }}</p>
+                    </div>
+                </div>
+              </div>
+        </a>
+        {% endif %}
+
+      </div>
+    </section>
+
 
         <section class="container xl:border-y-4 xl:border-black mx-auto p-5" dir="rtl">
           <div>
