@@ -27,7 +27,7 @@
         </div>
         </div>
       </section>
-      <section class="my-20 container md:my-52 mx-auto border-y-8 border-black h-full pb-20 md:h-full xl:h-full">
+      <section class="News-blogs my-20 container md:my-52 mx-auto border-y-8 border-black h-full pb-20 md:h-full xl:h-full">
         <div class="py-8 lg:mx-auto lg:max-w-screen-2xl text-center lg:py-16 lg:px-12">
           <h1 class="text-center mt-10 mb-4 md:mt-10 text-7xl  font-bold">
             ما الجديد؟
@@ -41,88 +41,130 @@
             </div>
           </div>
           <!--CARDS SECTION!!!!!-->
-<div class="flex flex-col px-2 xl:flex-row md:container md:mx-auto md:px-16 xl:px-0" dir="rtl">
-        
-        <div class="w-full xl:w-1/2 xl:px-1">
-          <div class="xl:hidden text-right px-5 pb-2 text-5xl font-bold " dir="rtl">
-            <p>اخبار</p>
-          </div>
-          
-          {% for news_item in news|slice:":3" %}
-          <a href="/news/{{ news_item.id }}" class="block w-full">
-            <div class="w-full lg:h-[230px] rounded-md " dir="rtl">
-              <div class="flex w-full h-full p-3 border-[2px] hover:bg-[#eeede8] border-primary-400 text-text rounded-lg xl:rounded-xl mt-2 shadow-md" >
-                <img class="w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] md:w-[152px] md:h-[152px] lg:w-[170px] lg:h-[170px] rounded-xl object-cover mb-3 md:mb-0 md:mr-4" 
-                     src="/media/{{ news_item.img }}" alt="صورة خبر {{ news_item.title }}">
-          
-                <div class="flex flex-col justify-between pr-2 w-full">
-                  <h1 class="7-words text-right hover:underline text-primary-500 font-bold text-md sm:text-xl lg:text-2xl xl:text-right leading-snug mb-2">
-                    {{ news_item.title }}
-                  </h1>
-                  <div class="mb-4 text-right">
-                    <div class="hidden lg:inline text-right text-sm sm:text-md">
-                      {{ news_item.content|truncatewords:30|safe }}
+          <div class="flex flex-col px-2 xl:flex-row md:container md:mx-auto md:px-16 xl:px-0" dir="rtl">
+                  
+                  <div class="w-full xl:w-1/2 xl:px-1">
+                    <div class="xl:hidden text-right px-5 pb-2 text-5xl font-bold " dir="rtl">
+                      <p>اخبار</p>
                     </div>
+                    
+                    {% for news_item in news|slice:":3" %}
+                    <a href="/news/{{ news_item.id }}" class="block w-full">
+                      <div class="w-full lg:h-[230px] rounded-md " dir="rtl">
+                        <div class="flex w-full h-full p-3 border-[2px] hover:bg-[#eeede8] border-primary-400 text-text rounded-lg xl:rounded-xl mt-2 shadow-md" >
+                          <img class="w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] md:w-[152px] md:h-[152px] lg:w-[170px] lg:h-[170px] rounded-xl object-cover mb-3 md:mb-0 md:mr-4" 
+                              src="/media/{{ news_item.img }}" alt="صورة خبر {{ news_item.title }}">
+                    
+                          <div class="flex flex-col justify-between pr-2 w-full">
+                            <h1 class="7-words text-right hover:underline text-primary-500 font-bold text-md sm:text-xl lg:text-2xl xl:text-right leading-snug mb-2">
+                              {{ news_item.title }}
+                            </h1>
+                            <div class="mb-4 text-right">
+                              <div class="hidden lg:inline text-right text-sm sm:text-md">
+                                {{ news_item.content|truncatewords:30|safe }}
+                              </div>
+                            </div>
+                            <div class="flex">
+                              <img class="rounded-full w-[24px] h-[24px] ml-2" src="https://placehold.co/300x300" alt="">
+                              <p class="text-right text-sm sm:text-md text-primary-500">
+                                {{ news_item.author.first_name }} {{ news_item.author.last_name }}
+                              </p>
+                            </div>
+                            <p class="text-sm text-right sm:text-md text-gray-400">
+                              تاريخ النشر: {{ news_item.date_start }}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                    {% endfor %}
                   </div>
-                  <div class="flex">
-                    <img class="rounded-full w-[24px] h-[24px] ml-2" src="https://placehold.co/300x300" alt="">
-                    <p class="text-right text-sm sm:text-md text-primary-500">
-                      {{ news_item.author.first_name }} {{ news_item.author.last_name }}
-                    </p>
-                  </div>
-                  <p class="text-sm text-right sm:text-md text-gray-400">
-                    تاريخ النشر: {{ news_item.date_start }}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </a>
-          {% endfor %}
-        </div>
 
-        <div class="w-full xl:w-1/2 xl:px-1 mt-4 xl:mt-0">
-          <div class="xl:hidden text-right mx-auto px-5 pb-2 text-5xl font-bold " dir="rtl">
-            <p>مقالات</p>
+                  <div class="w-full xl:w-1/2 xl:px-1 mt-4 xl:mt-0">
+                    <div class="xl:hidden text-right mx-auto px-5 pb-2 text-5xl font-bold " dir="rtl">
+                      <p>مقالات</p>
+                    </div>
+                    
+                    {% for blog in blogs|slice:":2" %}
+                    <a href="/blog/{{ blog.id }}" class="block hover:bg-[#eeede8]"> 
+                      <div class="w-full border-[3px] border-primary-400 text-text h-full rounded-md xl:rounded-xl mt-2 mb-4">
+                        <div class="w-full h-full p-5 border-primary-400 text-text rounded-lg shadow-md lg:flex">
+                          <img class="w-full h-[200px] rounded-xl object-cover mb-3 md:h-[50%] lg:w-[290px] lg:h-[289px]" 
+                              src="{{ blog.img.url }}" alt="صورة مقال {{ blog.title }}">
+                    
+                          <div class="flex flex-col justify-between pr-2 w-full lg:px-5">
+                            <h1 class="font-bold hover:underline text-primary-500 text-xl md:text-3xl lg:text-2xl text-right leading-snug mb-2">
+                              {{ blog.title }}
+                            </h1>
+                            <div class="text-right lg:pb-5">
+                              <p class="text-right text-md md:text-lg inline mb-4 lg:text-md">
+                                {{ blog.content|truncatewords:20|safe }}
+                              </p>
+                            </div>
+                            <div class="flex mt-4">
+                              <img class="rounded-full w-[35px] h-[35px] ml-2" src="https://placehold.co/300x300" alt="صورة الكاتب">
+                              <p class="text-right text-md md:text-lg text-primary-500">
+                                {{ blog.author.first_name }} {{ blog.author.last_name }}
+                              </p>
+                            </div>
+                            <p class="text-md text-right md:text-lg text-gray-400">
+                              تاريخ النشر: {{ blog.date }}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                    {% endfor %}
+                  </div>
+                  
           </div>
-          
-          {% for blog in blogs|slice:":2" %}
-          <a href="/blog/{{ blog.id }}" class="block hover:bg-[#eeede8]"> 
-            <div class="w-full border-[3px] border-primary-400 text-text h-full rounded-md xl:rounded-xl mt-2 mb-4">
-              <div class="w-full h-full p-5 border-primary-400 text-text rounded-lg shadow-md lg:flex">
-                <img class="w-full h-[200px] rounded-xl object-cover mb-3 md:h-[50%] lg:w-[290px] lg:h-[289px]" 
-                     src="{{ blog.img.url }}" alt="صورة مقال {{ blog.title }}">
-          
-                <div class="flex flex-col justify-between pr-2 w-full lg:px-5">
-                  <h1 class="font-bold hover:underline text-primary-500 text-xl md:text-3xl lg:text-2xl text-right leading-snug mb-2">
-                    {{ blog.title }}
-                  </h1>
-                  <div class="text-right lg:pb-5">
-                    <p class="text-right text-md md:text-lg inline mb-4 lg:text-md">
-                      {{ blog.content|truncatewords:20|safe }}
-                    </p>
-                  </div>
-                  <div class="flex mt-4">
-                    <img class="rounded-full w-[35px] h-[35px] ml-2" src="https://placehold.co/300x300" alt="صورة الكاتب">
-                    <p class="text-right text-md md:text-lg text-primary-500">
-                      {{ blog.author.first_name }} {{ blog.author.last_name }}
-                    </p>
-                  </div>
-                  <p class="text-md text-right md:text-lg text-gray-400">
-                    تاريخ النشر: {{ blog.date }}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </a>
-          {% endfor %}
-        </div>
-        
-      </div>
 
           </div>
           </div>
       </section>
-      <section class="my-20 container mx-auto md:my-60 h-full md:h-full xl:h-full">
+      <section class="Clubs my-20 container md:my-52 mx-auto border-b-8 border-black h-full pb-20 md:h-full xl:h-full">
+        <div class="">
+            <h2 class="text-6xl font-bold xl:text-right text-center text-gray-900 mb-4">
+               نوادينا المميّزة
+            </h2>
+            <div class="flex flex-col items-center gap-2 xl:flex-row-reverse xl:justify-between">
+              <p class="text-2xl font-normal text-gray-600">
+                خلك اقرب مع مع نوادينا
+              </p>
+              <p class="text-2xl font-normal text-primary-600 underline">
+                <a href="/clubs">المزيد</a>
+              </p>
+            </div>
+        </div>
+        <div class="mt-8 p-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+
+          <div class="bg-black aspect-square">
+            <img class="w-full h-full object-cover" src="https://placehold.co/200x200" alt="placeholder image">
+          </div>
+
+          <div class="bg-black aspect-square">
+            <img class="w-full h-full object-cover" src="https://placehold.co/200x200" alt="placeholder image">
+          </div>
+
+          <div class="bg-black aspect-square">
+            <img class="w-full h-full object-cover" src="https://placehold.co/200x200" alt="placeholder image">
+          </div>
+
+          <div class="bg-black aspect-square">
+            <img class="w-full h-full object-cover" src="https://placehold.co/200x200" alt="placeholder image">
+          </div>
+
+          <div class="bg-black aspect-square">
+            <img class="w-full h-full object-cover" src="https://placehold.co/200x200" alt="placeholder image">
+          </div>
+          
+          <div class="bg-black aspect-square">
+            <img class="w-full h-full object-cover" src="https://placehold.co/200x200" alt="placeholder image">
+          </div>
+
+        </div>
+      </section>
+      <section class="Calendar my-20 container mx-auto md:my-60 h-full md:h-full xl:h-full">
         <div class="lg:px-12 lg:px-2">
             <div class="w-full max-w-7xl mx-auto px-2 ">
               <h2 class="text-6xl font-bold xl:text-left text-center text-gray-900 mb-4">

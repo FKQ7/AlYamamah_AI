@@ -126,3 +126,11 @@ class NewsCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+def clubs(request):
+    all_blogs = Blogs.objects.all().order_by('-date')
+    for blog in all_blogs:
+        blog.content = re.sub(r'<img[^>]*>', '', blog.content)
+        blog.content = re.sub(r'<a[^>]*>|</a>', '', blog.content)
+        blog.content = re.sub(r'<p>\s*&nbsp;\s*</p>', '', blog.content)
+    return render(request, 'core/clubs.html', {'clubs': all_blogs})
