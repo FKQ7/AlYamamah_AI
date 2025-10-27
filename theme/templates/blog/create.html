@@ -3,7 +3,7 @@
 {% load form_tags %}
 
 {% block content %}
-<div class="container mx-auto px-4 min-h-screen flex items-center justify-center">
+<div class="container mx-auto px-4 min-h-screen flex items-center justify-center py-12">
     <div class="w-full max-w-lg lg:max-w-4xl bg-white p-8 rounded-lg shadow-lg" dir="rtl">
         <h1 class="text-3xl font-bold text-gray-800 mb-6 font-sans">إنشاء منشور مدونة جديد</h1>
         <form method="post" enctype="multipart/form-data" class="space-y-6">
@@ -25,6 +25,15 @@
                 {{ form.img|add_class:"w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500" }}
                 {% if form.img.errors %}
                 <p class="text-red-500 text-sm mt-1">{{ form.img.errors }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Club Selection Field -->
+            <div class="space-y-2">
+                <label for="id_club" class="block text-gray-700 font-medium">النادي (اختياري)</label>
+                {{ form.club|add_class:"w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500" }}
+                {% if form.club.errors %}
+                <p class="text-red-500 text-sm mt-1">{{ form.club.errors }}</p>
                 {% endif %}
             </div>
 

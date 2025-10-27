@@ -1,136 +1,247 @@
-from django.shortcuts import render
-from .models import News, Blogs, Event
 import re
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import auth, messages
+from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.models import User
+from django.utils.html import strip_tags
+from django.utils import timezone
+from django.views.generic import CreateView
 import bleach
+
+from .models import News, Blogs, Event, StudentClub
+from .forms import BlogForm, NewsForm
+
+
+# ===============================================
+# HELPER FUNCTIONS
+# ===============================================
+def _get_plain_text_preview(html_content):
+    """
+    Strips all HTML tags from content to create a plain-text preview.
+    Uses Django's built-in strip_tags for efficiency and safety.
+    """
+    if not html_content:
+        return ""
+    
+    text = strip_tags(html_content)
+    
+    # Replace multiple spaces/nbsp with a single space
+    text = re.sub(r'(&nbsp;|\s)+', ' ', text).strip()
+    return text
+
+# ===============================================
+# CORE & CLUB VIEWS
+# ===============================================
 def index(request):
-    news = News.objects.all().order_by('-date_start')[:3]
-    blogs = Blogs.objects.all().order_by('-date')[:2]
-    events = Event.objects.all().order_by('event_date')
+    news = News.objects.filter(is_approved=True).select_related('author', 'club').order_by('-date_start')[:3]
+    blogs = Blogs.objects.filter(is_approved=True).select_related('author', 'club').order_by('-date')[:2]
+    clubs = StudentClub.objects.all()
+    
+    today = timezone.now().date()
+    events = Event.objects.filter(event_date_end__gte=today).order_by('event_date')
+
     for blog in blogs:
-        blog.content = re.sub(r'<img[^>]*>', '', blog.content)
-        blog.content = re.sub(r'<a[^>]*>|</a>', '', blog.content)
-        blog.content = re.sub(r'<br[^>]*>|</br>', '', blog.content)
-        blog.content = re.sub(r'<p>\s*&nbsp;\s*</p>', '', blog.content)
-    # Clean up content for news
+        blog.content_preview = _get_plain_text_preview(blog.content)
     for item in news:
-        # Remove unwanted tags (e.g., <img>) if they exist
-        item.content = re.sub(r'<img[^>]*>', '', item.content)
-        item.content = re.sub(r'<a[^>]*>|</a>', '', item.content)
-        item.content = re.sub(r'<br[^>]*>|</br>', '', item.content)
-        item.content = re.sub(r'<p>\s*&nbsp;\s*</p>', '', item.content)
+        item.content_preview = _get_plain_text_preview(item.content)
+
+    context = {
+        'news': news,
+        'blogs': blogs,
+        'events': events,
+        'clubs': clubs,
+    }
+    return render(request, 'core/index.html', context)
+
+def clubs(request):
+    all_clubs = StudentClub.objects.all().order_by('name')
+    all_news = News.objects.filter(is_approved=True).select_related('author', 'club').order_by('-date_start')
+    all_blogs = Blogs.objects.filter(is_approved=True).select_related('author', 'club').order_by('-date')
+    
+    for item in all_news:
+        item.content_preview = _get_plain_text_preview(item.content)
+    for blog in all_blogs:
+        blog.content_preview = _get_plain_text_preview(blog.content)
+
+    context = {
+        'clubs': all_clubs,
+        'all_news': all_news,
+        'all_blogs': all_blogs,
+    }
+    return render(request, 'clubs/clubs.html', context)
 
 
-        # Sanitize content to ensure safe HTML
-        item.content = bleach.clean(
-            item.content,
-            tags=['b', 'i', 'u', 'p', 'br', 'em'],  # Allow only these tags
-            attributes={},  # Disallow all attributes
-            strip=True  # Remove all disallowed tags completely
-        )
-    return render(request, 'core/index.html', {'news': news, 'blogs': blogs, 'events':events})
+def club_detail(request, club_id):
+    club = get_object_or_404(StudentClub.objects.prefetch_related('members'), id=club_id)
+    
+    related_news = News.objects.filter(
+        club=club, 
+        is_approved=True
+    ).select_related('author', 'club').order_by('-date_start')
+    
+    related_blogs = Blogs.objects.filter(
+        club=club, 
+        is_approved=True
+    ).select_related('author', 'club').order_by('-date')
 
+    # Create previews
+    for item in related_news:
+        item.content_preview = _get_plain_text_preview(item.content)
+    for blog in related_blogs:
+        blog.content_preview = _get_plain_text_preview(blog.content)
+
+    context = {
+        'club': club,
+        'related_news': related_news,
+        'related_blogs': related_blogs,
+    }
+    return render(request, 'clubs/club_detail.html', context)
+
+
+# ===============================================
+# WRITER PROFILE VIEW
+# ===============================================
+def writer_profile(request, user_id):
+    """
+    Displays a profile page for a specific writer, showing their
+    info and all their approved posts.
+    """
+    # Use select_related('userprofile') to fetch the profile in the same query
+    writer = get_object_or_404(User.objects.select_related('userprofile'), id=user_id)
+    
+    blogs = Blogs.objects.filter(
+        author=writer, 
+        is_approved=True
+    ).select_related('club').order_by('-date')
+    
+    news = News.objects.filter(
+        author=writer, 
+        is_approved=True
+    ).select_related('club').order_by('-date_start')
+
+    # Explicitly query for the clubs the writer is a member of
+    writer_clubs = StudentClub.objects.filter(members=writer)
+
+    # Create previews
+    for item in news:
+        item.content_preview = _get_plain_text_preview(item.content)
+    for blog in blogs:
+        blog.content_preview = _get_plain_text_preview(blog.content)
+
+    context = {
+        'writer': writer,
+        'blogs': blogs,
+        'news': news,
+        'writer_clubs': writer_clubs,
+    }
+    return render(request, 'writers/writer_details.html', context)
+
+
+# ===============================================
+# BLOG & NEWS VIEWS
+# ===============================================
 def news(request):
-    news = News.objects.all().order_by('-date_start')
-    for item in news:
-        if item.content:
-            # Remove unwanted tags (e.g., <img>)
-            item.content = re.sub(r'<img[^>]*>', '', item.content)
-            item.content = re.sub(r'<a[^>]*>|</a>', '', item.content)
-            item.content = re.sub(r'<br[^>]*>|</br>', '', item.content)
-            item.content = re.sub(r'<p>\s*&nbsp;\s*</p>', '', item.content)
-
-
-            # Strip all HTML tags, retaining plain text only
-            item.content = bleach.clean(
-                item.content,
-                tags=['b', 'i', 'u', 'p', 'br', 'em'],  # Allow only these tags
-                attributes={},  # Disallow all attributes
-                strip=True  # Remove all disallowed tags completely
-            )
-    return render(request, 'news/news.html', {'news': news})
-from django.contrib.auth import authenticate
-from django.contrib import auth
-
+    all_news = News.objects.filter(is_approved=True).select_related('author', 'club').order_by('-date_start')
+    for item in all_news:
+        item.content_preview = _get_plain_text_preview(item.content)
+        
+    context = {
+        'news': all_news
+    }
+    return render(request, 'news/news.html', context)
 
 def blog(request):
-    header_blogs = Blogs.objects.all().order_by('-date')[:4]
-    all_blogs = Blogs.objects.all().order_by('-date')
+    all_blogs = Blogs.objects.filter(is_approved=True).select_related('author', 'club').order_by('-date')
+    
+    header_blogs = all_blogs[:4]
+    
     for blog in all_blogs:
-        blog.content = re.sub(r'<img[^>]*>', '', blog.content)
-        blog.content = re.sub(r'<a[^>]*>|</a>', '', blog.content)
-        blog.content = re.sub(r'<p>\s*&nbsp;\s*</p>', '', blog.content)
+        blog.content_preview = _get_plain_text_preview(blog.content)
 
+    context = {
+        'header': header_blogs,
+        'blogs': all_blogs
+    }
+    return render(request, 'blog/blog.html', context)
 
-    for blog in header_blogs:
-        blog.content = re.sub(r'<img[^>]*>', '', blog.content)
-        blog.content = re.sub(r'<a[^>]*>|</a>', '', blog.content)
-        blog.content = re.sub(r'<p>\s*&nbsp;\s*</p>', '', blog.content)
-
-
-    return render(request, 'blog/blog.html', {'header': header_blogs, 'blogs': all_blogs})
-
-from django.shortcuts import get_object_or_404
 def details_blog(request, id):
-    header_blogs = Blogs.objects.all().order_by('-date')[:4]
-    obj = get_object_or_404(Blogs, id=id)
+    blog_post = get_object_or_404(Blogs.objects.select_related('author', 'club'), id=id, is_approved=True)
+
+    header_blogs = Blogs.objects.filter(is_approved=True).order_by('-date')[:4]
     for blog in header_blogs:
-        blog.content = re.sub(r'<img[^>]*>', '', blog.content)
-    return render(request, 'blog/details.html', {'blog': obj,'header': header_blogs})
+        blog.content_preview = _get_plain_text_preview(blog.content)
+
+    context = {
+        'blog': blog_post,
+        'header': header_blogs
+    }
+    return render(request, 'blog/details.html', context)
 
 def details_news(request, id):
-    obj = get_object_or_404(News, id=id)
-    return render(request, 'news/details.html', {'news': obj})
-from django.contrib import messages
-from django.contrib.auth import authenticate, login as auth_login
-from django.shortcuts import render, redirect
+    news_item = get_object_or_404(News.objects.select_related('author', 'club'), id=id, is_approved=True)
+    context = {
+        'news': news_item
+    }
+    return render(request, 'news/details.html', context)
 
-def login(request):
+
+# ===============================================
+# AUTHENTICATION & POST CREATION
+# ===============================================
+def login_view(request): # Renamed from login
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
+        
         user = authenticate(request, username=email, password=password)
+        
         if user is not None:
             auth_login(request, user)
-            return redirect('/')
+            return redirect('index') 
         else:
             messages.info(request, "اسم المستخدم أو كلمة المرور غير صحيحة. فضلاً تأكد من صحة المعلومات المدخلة.")
-            return redirect('/login')
+            return render(request, 'core/login.html', {'email': email})
 
     return render(request, 'core/login.html')
 
-def logout(request):
+def logout_view(request): # Renamed from logout
     auth.logout(request)
-    return redirect('/')
+    return redirect('index')
 
-from django.views.generic import CreateView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import BlogForm, NewsForm
-class BlogCreateView(LoginRequiredMixin, CreateView):
+class BlogCreateView(PermissionRequiredMixin, CreateView):
     model = Blogs
-    form_class  = BlogForm
+    form_class = BlogForm
     template_name = 'blog/create.html'
-    success_url = '/'
-    login_url = '/login/'
+    success_url = '/' 
+    login_url = 'login'
+    permission_required = 'core.add_blogs' 
+    raise_exception = True 
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-class NewsCreateView(LoginRequiredMixin, CreateView):
+class NewsCreateView(PermissionRequiredMixin, CreateView):
     model = News
-    form_class  = NewsForm
+    form_class = NewsForm
     template_name = 'news/create.html'
-    success_url = '/'
-    login_url = '/login/'
+    success_url = '/' 
+    login_url = 'login'
+    permission_required = 'core.add_news'
+    raise_exception = True 
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-def clubs(request):
-    all_blogs = Blogs.objects.all().order_by('-date')
-    for blog in all_blogs:
-        blog.content = re.sub(r'<img[^>]*>', '', blog.content)
-        blog.content = re.sub(r'<a[^>]*>|</a>', '', blog.content)
-        blog.content = re.sub(r'<p>\s*&nbsp;\s*</p>', '', blog.content)
-    return render(request, 'core/clubs.html', {'clubs': all_blogs})

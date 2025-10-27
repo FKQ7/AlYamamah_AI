@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section dir="rtl" class="container mx-auto min-h-screen">
+  
+  <!-- =========== Writer Header =========== -->
+  <div class="mb-12 border-b-4 border-orange-400 pb-16">
+    
+    <!-- FIX: Added a new parent div with "relative" -->
+    <div class="relative">
+      
+      <!-- Header Image Container (Keeps overflow-hidden) -->
+      <div class="h-48 md:h-64 bg-gray-200 rounded-b-lg overflow-hidden">
+        {% if writer.userprofile.header_picture %}
+          <img 
+            class="w-full h-full object-cover" 
+            src="{{ writer.userprofile.header_picture.url }}" 
+            alt="صورة رأس الصفحة لـ {{ writer.first_name }}"
+          >
+        {% else %}
+          <!-- Fallback header -->
+          <div class="w-full h-full bg-gradient-to-r from-orange-50 to-orange-100"></div>
+        {% endif %}
+      </div>
+
+      <!-- Profile Image (Now overlays correctly) -->
+      <div class="absolute -bottom-24 left-1/2 -translate-x-1/2 w-48 h-48 border-4 border-white rounded-full overflow-hidden shadow-2xl bg-white z-10">
+        {% if writer.userprofile.profile_picture %}
+          <img
+            class="object-cover w-full h-full"
+            src="{{ writer.userprofile.profile_picture.url }}"
+            alt="صورة {{ writer.first_name }} {{ writer.last_name }}"
+          />
+        {% else %}
+          <img
+            class="object-cover w-full h-full"
+            src="https://placehold.co/200x200/f97316/FFFFFF/png?text={{ writer.first_name.0|default:'' }}{{ writer.last_name.0|default:'' }}"
+            alt="صورة {{ writer.first_name }} {{ writer.last_name }}"
+          />
+        {% endif %}
+      </div>
+
+    </div> <!-- End of new relative parent div -->
+
+    <!-- Writer Name & Info -->
+    <div class="pt-28 text-center">
+      <h1 class="text-3xl md:text-5xl font-bold text-gray-800 mb-2">
+        {{ writer.first_name }} {{ writer.last_name }}
+      </h1>
+      <p class="text-lg text-gray-500">@{{ writer.username }}</p>
+      
+      <!-- List of clubs they are in -->
+      <div class="flex justify-center flex-wrap gap-2 mt-4">
+        
+        {% for club in writer_clubs %}
+          <a href="{% url 'club_detail' club.id %}" class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm font-semibold hover:bg-orange-200">
+            {{ club.name }}
+          </a>
+        {% empty %}
+          <p class="text-gray-400 text-sm">هذا الكاتب ليس عضواً في أي نادي حالياً.</p>
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- =========== Writer's Posts Section =========== -->
+  <div class="News-blogs container mx-auto mt-16 pt-8">
+    <div class="py-8 lg:mx-auto lg:max-w-screen-2xl text-center lg:py-12 lg:px-12">
+      <h1 class="text-center mt-10 mb-4 md:mt-10 text-5xl font-bold">
+        منشورات الكاتب
+      </h1>
+      
+      <div class="hidden texttt xl:block" dir="rtl">
+        <div class="flex justify-between w-full mx-auto pb-3">
+          <p class="pr- text-4xl font-bold">الأخبار</p>
+          <p class="pr-12 text-4xl font-bold">المقالات</p>
+          <p></p>
+        </div>
+      </div>
+
+      <!--CARDS SECTION!!!!!-->
+      <div class="flex flex-col px-2 xl:flex-row md:container md:mx-auto md:px-16 xl:px-0" dir="rtl">
+            
+        <!-- News Column -->
+        <div class="w-full xl:w-1/2 xl:px-1">
+          <div class="xl:hidden text-right px-5 pb-2 text-4xl font-bold " dir="rtl">
+            <p>الأخبار</p>
+          </div>
+          
+          {% for news_item in news %}
+          <a href="{% url 'details_news' news_item.id %}" class="block w-full">
+            <div class="w-full lg:h-[230px] rounded-md " dir="rtl">
+              <div class="flex w-full h-full p-3 border-[2px] hover:bg-[#eeede8] border-primary-400 text-text rounded-lg xl:rounded-xl mt-2 shadow-md" >
+                
+                {% if news_item.img %}
+                <img class="w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] md:w-[152px] md:h-[152px] lg:w-[170px] lg:h-[170px] rounded-xl object-cover mb-3 md:mb-0 md:mr-4" 
+                     src="{{ news_item.img.url }}" alt="صورة خبر {{ news_item.title }}">
+                {% else %}
+                <img class="w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] md:w-[152px] md:h-[152px] lg:w-[170px] lg:h-[170px] rounded-xl object-cover mb-3 md:mb-0 md:mr-4" 
+                     src="https://placehold.co/500x500/f97316/FFFFFF/png?text=خبر" alt="صورة خبر {{ news_item.title }}">
+                {% endif %}
+          
+                <div class="flex flex-col justify-between pr-2 w-full">
+                  <h1 class="7-words text-right hover:underline text-primary-500 font-bold text-md sm:text-xl lg:text-2xl xl:text-right leading-snug mb-2">
+                    {{ news_item.title }}
+                  </h1>
+                  <div class="mb-4 text-right">
+                    <div class="hidden lg:inline text-right text-sm sm:text-md">
+                      {{ news_item.content_preview|truncatewords:30 }}
+                    </div>
+                  </div>
+                  <p class="text-sm text-right sm:text-md text-gray-400">
+                    تاريخ النشر: {{ news_item.date_start }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </a>
+          {% empty %}
+          <p class="text-gray-500 text-center py-10">لم يقم هذا الكاتب بنشر أي أخبار.</p>
+          {% endfor %}
+        </div>
+
+        <!-- Blogs Column -->
+        <div class="w-full xl:w-1/2 xl:px-1 mt-4 xl:mt-0">
+          <div class="xl:hidden text-right mx-auto px-5 pb-2 text-4xl font-bold " dir="rtl">
+            <p>المقالات</p>
+          </div>
+          
+          {% for blog in blogs %}
+          <a href="{% url 'details_blog' blog.id %}" class="block hover:bg-[#eeede8]"> 
+            <div class="w-full border-[3px] border-primary-400 text-text h-full rounded-md xl:rounded-xl mt-2 mb-4">
+              <div class="w-full h-full p-5 border-primary-400 text-text rounded-lg shadow-md lg:flex">
+                
+                {% if blog.img %}
+                <img class="w-full h-[200px] rounded-xl object-cover mb-3 md:h-[50%] lg:w-[290px] lg:h-[289px]" 
+                     src="{{ blog.img.url }}" alt="صورة مقال {{ blog.title }}">
+                {% else %}
+                <img class="w-full h-[200px] rounded-xl object-cover mb-3 md:h-[50%] lg:w-[290px] lg:h-[289px]" 
+                     src="https://placehold.co/500x500/f97316/FFFFFF/png?text=مقال" alt="صورة مقال {{ blog.title }}">
+                {% endif %}
+          
+                <div class="flex flex-col justify-between pr-2 w-full lg:px-5">
+                  <h1 class="font-bold hover:underline text-primary-500 text-xl md:text-3xl lg:text-2xl text-right leading-snug mb-2">
+                    {{ blog.title }}
+                  </h1>
+                  <div class="text-right lg:pb-5">
+                    <p class="text-right text-md md:text-lg inline mb-4 lg:text-md">
+                      {{ blog.content_preview|truncatewords:20 }}
+                    </p>
+                  </div>
+                  <p class="text-md text-right md:text-lg text-gray-400">
+                    تاريخ النشر: {{ blog.date }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </a>
+          {% empty %}
+          <p class="text-gray-500 text-center py-10">لم يقم هذا الكاتب بنشر أي مقالات.</p>
+          {% endfor %}
+        </div>
+            
+      </div>
+
+    </div>
+  </div>
+
+</section>
+{% endblock content %}
+

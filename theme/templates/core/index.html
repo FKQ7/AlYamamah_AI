@@ -122,48 +122,45 @@
           </div>
           </div>
       </section>
-      <section class="Clubs my-20 container md:my-52 mx-auto border-b-8 border-black h-full pb-20 md:h-full xl:h-full">
+    <section class="Clubs my-20 container md:my-52 mx-auto border-b-8 border-black h-full pb-20 md:h-full xl:h-full">
         <div class="">
             <h2 class="text-6xl font-bold xl:text-right text-center text-gray-900 mb-4">
-               نوادينا المميّزة
+                نوادينا المميّزة
             </h2>
             <div class="flex flex-col items-center gap-2 xl:flex-row-reverse xl:justify-between">
-              <p class="text-2xl font-normal text-gray-600">
-                خلك اقرب مع مع نوادينا
-              </p>
-              <p class="text-2xl font-normal text-primary-600 underline">
-                <a href="/clubs">المزيد</a>
-              </p>
+                <p class="text-2xl font-normal text-gray-600">
+                    خلك اقرب مع مع نوادينا
+                </p>
+                <p class="text-2xl font-normal text-primary-600 underline">
+                    <a href="{% url 'clubs' %}">المزيد</a>
+                </p>
             </div>
         </div>
-        <div class="mt-8 p-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
 
-          <div class="bg-black aspect-square">
-            <img class="w-full h-full object-cover" src="https://placehold.co/200x200" alt="placeholder image">
-          </div>
 
-          <div class="bg-black aspect-square">
-            <img class="w-full h-full object-cover" src="https://placehold.co/200x200" alt="placeholder image">
-          </div>
+        <div dir="rtl" class="mt-8 p-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
 
-          <div class="bg-black aspect-square">
-            <img class="w-full h-full object-cover" src="https://placehold.co/200x200" alt="placeholder image">
-          </div>
+          {% if clubs %}
+            {% for club in clubs %}
+              <a href="/clubs/{{ club.id }}/" class="group bg-gray-900 aspect-square overflow-hidden relative rounded-lg shadow-md" title="{{ club.name }}">
+                
+                {% if club.img %}
+                  <img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110" src="{{ club.img.url }}" alt="{{ club.name }}">
+                {% else %}
+                  <img class="w-full h-full object-cover" src="https://placehold.co/200x200/333/FFF?text={{ club.name|urlencode }}" alt="{{ club.name }}">
+                {% endif %}
 
-          <div class="bg-black aspect-square">
-            <img class="w-full h-full object-cover" src="https://placehold.co/200x200" alt="placeholder image">
-          </div>
-
-          <div class="bg-black aspect-square">
-            <img class="w-full h-full object-cover" src="https://placehold.co/200x200" alt="placeholder image">
-          </div>
-          
-          <div class="bg-black aspect-square">
-            <img class="w-full h-full object-cover" src="https://placehold.co/200x200" alt="placeholder image">
-          </div>
+                <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 p-2 transition-opacity duration-300 opacity-0 group-hover:opacity-100">
+                    <p class="text-white text-center text-sm font-semibold truncate">{{ club.name }}</p>
+                </div>
+              </a>
+            {% endfor %}
+          {% else %}
+              <p class="text-gray-500 col-span-full text-center text-lg">لا توجد أندية لعرضها حالياً.</p>
+          {% endif %}
 
         </div>
-      </section>
+    </section>
       <section class="Calendar my-20 container mx-auto md:my-60 h-full md:h-full xl:h-full">
         <div class="lg:px-12 lg:px-2">
             <div class="w-full max-w-7xl mx-auto px-2 ">

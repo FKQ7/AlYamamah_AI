@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %} <!-- تحميل مكتبة static لاستخدامها إذا لزم الأمر -->
+{% block content %}
+<!--clubs.html-->
+<section dir="rtl" class="container mx-auto py-12 px-4 min-h-screen">
+  <!-- Section Header -->
+  <div class="text-center mb-10">
+    <h1 class="text-3xl md:text-5xl font-bold text-gray-800">
+      نوادينا المميزة
+    </h1>
+    <p class="text-base md:text-lg text-gray-500 mt-2">
+      لا تفوتك أحدث أخبار مجتمعك
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    
+    <!-- بدء الحلقة لتكرار النوادي -->
+    {% for club in clubs %}
+      <div
+        class="flex flex-col sm:flex-row items-center p-4 border-2 border-orange-400 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
+      >
+        <!-- صورة النادي -->
+        <div class="md:w-1/3 w-[200px] sm:w-[150px] flex-shrink-0 ml-0 sm:ml-4 mb-4 sm:mb-0">
+          {% if club.img %}
+            <img
+              class="object-cover w-full h-48 sm:h-full rounded-xl"
+              src="{{ club.img.url }}"
+              alt="شعار نادي {{ club.name }}"
+            />
+          {% else %}
+            <!-- صورة احتياطية في حال عدم وجود صورة -->
+            <img
+              class="object-cover w-full h-48 sm:h-full rounded-xl"
+              src="https://placehold.co/500x500/f97316/FFFFFF/png?text={{ club.name|urlencode }}"
+              alt="شعار نادي {{ club.name }}"
+            />
+          {% endif %}
+        </div>
+
+        <!-- تفاصيل النادي -->
+        <div class="flex flex-col justify-between h-full w-full">
+          <div>
+            <h2 class="text-lg md:text-xl font-bold text-gray-800 mb-2">
+              {{ club.name }}
+            </h2>
+            <div class="text-gray-600 text-sm md:text-base leading-relaxed prose prose-sm max-h-24 overflow-hidden">
+              {{ club.description|safe|truncatewords_html:25 }}
+            </div>
+          </div>
+          <a
+            href="/clubs/{{ club.id }}/"
+            class="inline-block bg-orange-500 text-white text-center px-5 py-2 rounded-lg mt-4 hover:bg-orange-600 transition-colors duration-300">
+            اعرف المزيد
+          </a>
+        </div>
+      </div>
+    
+    <!-- رسالة في حال عدم وجود أي نادي -->
+    {% empty %}
+      <div class="col-span-1 lg:col-span-2 text-center py-10">
+        <p class="text-xl text-gray-500">لا توجد أندية لعرضها حالياً.</p>
+      </div>
+    {% endfor %}
+    <!-- نهاية الحلقة -->
+
+  </div>
+</section>
+
+{% endblock content %}
