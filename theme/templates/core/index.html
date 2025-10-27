@@ -68,6 +68,9 @@
                               <img class="rounded-full w-[24px] h-[24px] ml-2" src="https://placehold.co/300x300" alt="">
                               <p class="text-right text-sm sm:text-md text-primary-500">
                                 {{ news_item.author.first_name }} {{ news_item.author.last_name }}
+                                                                        {% if news_item.club %}
+                                        <span class="">- {{ news_item.club.name }}</span>
+                                        {% endif %}
                               </p>
                             </div>
                             <p class="text-sm text-right sm:text-md text-gray-400">
@@ -105,6 +108,9 @@
                               <img class="rounded-full w-[35px] h-[35px] ml-2" src="https://placehold.co/300x300" alt="صورة الكاتب">
                               <p class="text-right text-md md:text-lg text-primary-500">
                                 {{ blog.author.first_name }} {{ blog.author.last_name }}
+                                                                        {% if news_item.club %}
+                                        <span class="text-gray-400">- {{ news_item.club.name }}</span>
+                                        {% endif %}
                               </p>
                             </div>
                             <p class="text-md text-right md:text-lg text-gray-400">
