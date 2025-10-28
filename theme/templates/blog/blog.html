@@ -18,8 +18,13 @@
                 <p class="text-right text-md md:text-lg ">{{ header.0.content|truncatewords:30|safe }}</p>
               <div>
                  <div class="flex items-center mt-2">
-                  <img class="rounded-full w-6 h-6 ml-2 object-cover" src="https://placehold.co/300x300" alt="صورة الكاتب">
-                  <p class="text-md text-primary-500">{{ header.0.author.first_name }} {{ header.0.author.last_name }}</p>
+                  <p class="text-md text-primary-500">{{ header.0.author.first_name }} {{ header.0.author.last_name }}
+                                                                                   {% if header.0.club %}
+                <span class="text-sm font-medium md:text-lg p-3 transition-colors">
+                  يتبع لـ: {{ header.0.club.name }}
+                </span>
+            {% endif %}
+                  </p>
                 </div>
                   <p class="text-sm text-right text-gray-400 mt-1">تاريخ النشر: {{ header.0.date }}</p>
               </div>
@@ -38,8 +43,13 @@
                 <p class="text-right text-md md:text-lg ">{{ header.1.content|truncatewords:30|safe }}</p>
               <div>
                  <div class="flex items-center mt-2">
-                  <img class="rounded-full w-6 h-6 ml-2 object-cover" src="https://placehold.co/300x300" alt="صورة الكاتب">
-                  <p class="text-md text-primary-500">{{ header.1.author.first_name }} {{ header.1.author.last_name }}</p>
+                  <p class="text-md text-primary-500">{{ header.1.author.first_name }} {{ header.1.author.last_name }}
+                                                                                                       {% if header.1.club %}
+                <span class="text-sm font-medium md:text-lg p-3 transition-colors">
+                  يتبع لـ: {{ header.1.club.name }}
+                </span>
+            {% endif %}
+                  </p>
                 </div>
                   <p class="text-sm text-right text-gray-400 mt-1">تاريخ النشر: {{ header.1.date }}</p>
               </div>
@@ -58,8 +68,13 @@
                     <p class="text-right text-sm">{{ header.2.content|truncatewords:10|safe }}</p>
                 </div>
                 <div class="mt-2"> <div class="flex items-center">
-                        <img class="rounded-full w-6 h-6 ml-2 object-cover" src="https://placehold.co/300x300" alt="صورة الكاتب">
-                        <p class="text-md text-primary-500">{{ header.2.author.first_name }} {{ header.2.author.last_name }}</p>
+                        <p class="text-md text-primary-500">{{ header.2.author.first_name }} {{ header.2.author.last_name }}
+                                                                                                             {% if header.2.club %}
+                <span class="text-sm font-medium md:text-lg p-3 transition-colors">
+                  يتبع لـ: {{ header.2.club.name }}
+                </span>
+            {% endif %}
+                        </p>
                     </div>
                     <p class="text-sm text-right text-gray-400 mt-1">تاريخ النشر: {{ header.2.date }}</p>
                 </div>
@@ -79,7 +94,13 @@
                     </div>
                     <div class="mt-2"> <div class="flex items-center">
                             <img class="rounded-full w-6 h-6 ml-2 object-cover" src="https://placehold.co/300x300" alt="صورة الكاتب">
-                            <p class="text-md text-primary-500">{{ header.3.author.first_name }} {{ header.3.author.last_name }}</p>
+                            <p class="text-md text-primary-500">{{ header.3.author.first_name }} {{ header.3.author.last_name }}
+                                                                                                                 {% if header.3.club %}
+                <span class="text-sm font-medium md:text-lg p-3 transition-colors">
+                  يتبع لـ: {{ header.3.club.name }}
+                </span>
+            {% endif %}
+                            </p>
                         </div>
                         <p class="text-sm text-right text-gray-400 mt-1">تاريخ النشر: {{ header.3.date }}</p>
                     </div>
@@ -128,9 +149,13 @@
                       </div>
                       <!-- Author and Date -->
                       <div class="flex mt-5">
-                        <img class="rounded-full w-[35px] h-[35px] ml-2" src="https://placehold.co/300x300" alt="">
                         <p class="text-right mt-1 text-md md:text-lg text-primary-500">
                           {{blog.author.first_name}} {{blog.author.last_name}}
+                                                                                                             {% if blog.club %}
+                <span class="text-sm font-medium md:text-lg p-3 transition-colors">
+                  يتبع لـ: {{ blog.club.name }}
+                </span>
+            {% endif %}
                         </p>
                       </div>
                       <p class="text-md text-right md:text-lg text-gray-400 mt-2">

@@ -18,7 +18,6 @@ class UserProfile(models.Model):
     def __str__(self):
         return f'{self.user.username} Profile'
 
-# Signals to auto-create/save UserProfile when a User is created/saved
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
@@ -52,7 +51,7 @@ class StudentClub(models.Model):
 class News(models.Model):
     class Meta:
         ordering = ['-date_start']
-        verbose_name_plural = "News" # Good practice
+        verbose_name_plural = "News"
         
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     img = models.ImageField(upload_to='news_images/')
@@ -68,7 +67,6 @@ class News(models.Model):
     tag_3 = models.CharField(max_length=100, null=True, blank=True)
     is_approved = models.BooleanField(default=False)
     
-    # --- UPDATED FIELD ---
     club = models.ForeignKey(
         StudentClub, 
         on_delete=models.SET_NULL,  # Don't delete post if club is deleted
@@ -82,7 +80,7 @@ class News(models.Model):
 class Blogs(models.Model):
     class Meta:
         ordering = ['-date']
-        verbose_name_plural = "Blogs" # Good practice
+        verbose_name_plural = "Blogs"
         
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     img = models.ImageField(upload_to='blogs_images/')

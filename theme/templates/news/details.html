@@ -10,20 +10,67 @@
             {{news.title|safe}}
         </h1>
         <div class="mt-4">
-            <div class="flex items-center mt-5" dir="rtl">
+      <div class="flex items-center gap-4 mb-6" dir="rtl">
 
-                <div class="pr-2 text-sm">
-                    <span class="font-semibold text-primary-600 text-lg">
-                        الكاتب: {{news.author.first_name}} {{news.author.last_name}}
-                    </span>
-                    
-                </div>
-            </div>
+        {% if news.author %}
+          <!-- Author Profile Picture -->
+          <a href="{% url 'writer_profile' news.author.id %}">
+            {% if news.author.userprofile.profile_picture %}
+              <img class="w-16 h-16 rounded-full object-cover shadow-md" src="{{ news.author.userprofile.profile_picture.url }}" alt="{{ news.author.first_name }}">
+            {% else %}
+              <img class="w-16 h-16 rounded-full object-cover shadow-md" src="https://placehold.co/200x200/f97316/FFFFFF/png?text={{ news.author.first_name.0|default:'' }}{{ news.author.last_name.0|default:'' }}" alt="{{ news.author.first_name }}">
+            {% endif %}
+          </a>
+          
+          <div>
+            <!-- Author Name and Link -->
+            <a href="{% url 'writer_profile' news.author.id %}" class="font-semibold text-primary-600 text-lg hover:underline">
+              {{ news.author.first_name }} {{ news.author.last_name }}
+            </a>
+
+            <!-- Date -->
+            <p class="text-gray-500 text-sm">
+              تاريخ النشر: {{ news.date_start }}
+            </p>
+
+            <!-- Show club name if it exists -->
+            {% if news.club %}
+              <a href="{% url 'club_detail' news.club.id %}" class="inline-block mt-2">
+                <span class="text-sm font-medium bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full hover:bg-yellow-200 transition-colors">
+                  يتبع لـ: {{ news.club.name }}
+                </span>
+              </a>
+            {% endif %}
+            
+            
+          </div>
+          
+        {% else %}
+          <!-- Fallback if author is None -->
+          <img class="w-16 h-16 rounded-full object-cover shadow-md" src="https://placehold.co/200x200/f97316/FFFFFF/png?text=؟" alt="كاتب غير معروف">
+          <div>
+            <p class="font-semibold text-gray-700 text-lg">
+              كاتب غير معروف
+            </p>
+            <p class="text-gray-500 text-sm">
+              تاريخ النشر: {{ news.date_start }}
+            </p>
+          </div>
+        {% endif %}
+
+      </div>
             <div class="my-5">
                 <p>
                 {{news.date}}{{news.date_start}}  :تاريخ النشرة
                 </p>
             </div>
+                            {% if user == news.author %}
+                <div dir="rtl" class="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200 flex items-center gap-4">
+                    <p class="font-semibold text-gray-700">أدوات المالك:</p>
+                    <a href="{% url 'news_update' news.pk %}" class="text-sm font-medium text-blue-600 hover:underline">تعديل</a>
+                    <a href="{% url 'news_delete' news.pk %}" classs="text-sm font-medium text-red-600 hover:underline">حذف</a>
+                </div>
+                {% endif %}
             <div class="content">
                 <div>
                     <img src="{{ news.img.url}}" class="w-full h-[240px] md:h-[450px] object-cover rounded-lg" alt="blog image">
@@ -33,8 +80,12 @@
                 </h1>
                 <div class="h-0.5 bg-black w-full"></div>
                 <div class="mt-4 text-lg bg-[#EFEDE8] p-3 rounded-lg blog-content">
-                    <p class="inline text-xl font-semibold underline" style="background-color: #F8DF66;">
-                        {{news.author.first_name}} {{news.author.last_name}}
+                    <p class="inline text-xl font-semibold bg-yellow-200 hover:bg-yellow-300">
+                    <span class="font-semibold text-primary-600 hover:underline text-lg m-2">
+                        <a href="/writer/{{ news.author.id }}">
+                        الكاتب: {{news.author.first_name}} {{news.author.last_name}}
+                        </a>
+                    </span>
                     </p>
                     <p class="">{{ news.content|safe }}</p>
 

@@ -40,7 +40,13 @@
                                                 <div class="">
                                                     <div class="border-t-2 border-black w-1/2 my-2"></div>
                                                     <p class="text-xs mt-2">تاريخ النشرة {{ item.date_start }}</p>
-                                                    <p class="text-primary-600 text-sm font-normal">الناشر {{ item.author.first_name }} {{ item.author.last_name }}</p>
+                                                    <p class="text-primary-600 text-sm font-normal">الناشر {{ item.author.first_name }} {{ item.author.last_name }}
+                                                        {% if item.club %}
+                                                            <span class="text-sm font-medium md:text-lg p-3 transition-colors">
+                                                            يتبع لـ: {{ item.club.name }}
+                                                            </span>
+                                                        {% endif %}
+                                                    </p>
                                                 </div>
                                             </p>
                                         </div>
@@ -66,7 +72,13 @@
                                             <div class="">
                                                 <div class="border-t-2 border-black w-1/2 my-2"></div>
                                                 <p class="text-xs mt-2">تاريخ النشرة {{ item.date_start }}</p>
-                                                <p class="text-primary-600 text-sm font-normal">الناشر {{ item.author.first_name }} {{ item.author.last_name }}</p>
+                                                <p class="text-primary-600 text-sm font-normal">الناشر {{ item.author.first_name }} {{ item.author.last_name }}
+                                                                                                            {% if item.club %}
+                                                            <span class="text-sm font-medium md:text-lg p-3 transition-colors">
+                                                            يتبع لـ: {{ item.club.name }}
+                                                            </span>
+                                                        {% endif %}
+                                                </p>
                                             </div>
                                         </p>
                                     </div>

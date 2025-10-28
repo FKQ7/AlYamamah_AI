@@ -10,20 +10,68 @@
             {{blog.title|safe}}
         </h1>
         <div class="mt-4">
-            <div class="flex items-center mt-5" dir="rtl">
+      <div class="flex items-center gap-4 mb-6" dir="rtl">
 
-                <div class="pr-2 text-sm">
-                    <span class="font-semibold text-primary-600 text-lg">
-                        الكاتب: {{blog.author.first_name}} {{blog.author.last_name}}
-                    </span>
-                    
-                </div>
-            </div>
+        {% if blog.author %}
+          <!-- Author Profile Picture -->
+          <a href="{% url 'writer_profile' blog.author.id %}">
+            {% if blog.author.userprofile.profile_picture %}
+              <img class="w-16 h-16 rounded-full object-cover shadow-md" src="{{ blog.author.userprofile.profile_picture.url }}" alt="{{ blog.author.first_name }}">
+            {% else %}
+              <img class="w-16 h-16 rounded-full object-cover shadow-md" src="https://placehold.co/200x200/f97316/FFFFFF/png?text={{ blog.author.first_name.0|default:'' }}{{ blog.author.last_name.0|default:'' }}" alt="{{ blog.author.first_name }}">
+            {% endif %}
+          </a>
+          
+          <div>
+            <!-- Author Name and Link -->
+            <a href="{% url 'writer_profile' blog.author.id %}" class="font-semibold text-primary-600 text-lg hover:underline">
+              {{ blog.author.first_name }} {{ blog.author.last_name }}
+            </a>
+
+            <!-- Date -->
+            <p class="text-gray-500 text-sm">
+              تاريخ النشر: {{ blog.date }}
+            </p>
+            
+            <!-- THIS IS THE IMPROVED PART -->
+            <!-- Show club name if it exists -->
+            {% if blog.club %}
+              <a href="{% url 'club_detail' blog.club.id %}" class="inline-block mt-2">
+                <span class="text-sm font-medium bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full hover:bg-yellow-200 transition-colors">
+                  يتبع لـ: {{ blog.club.name }}
+                </span>
+              </a>
+            {% endif %}
+            
+            <!-- END OF IMPROVED PART -->
+            
+          </div>
+        {% else %}
+          <!-- Fallback if author is None -->
+          <img class="w-16 h-16 rounded-full object-cover shadow-md" src="https://placehold.co/200x200/f97316/FFFFFF/png?text=؟" alt="كاتب غير معروف">
+          <div>
+            <p class="font-semibold text-gray-700 text-lg">
+              كاتب غير معروف
+            </p>
+            <p class="text-gray-500 text-sm">
+              تاريخ النشر: {{ blog.date }}
+            </p>
+          </div>
+        {% endif %}
+
+      </div>
             <div class="my-5">
                 <p>
-                {{blog.date}}{{blog.date_start}}  :تاريخ النشرة
+                {{blog.date}}  :تاريخ النشرة
                 </p>
             </div>
+                                        {% if user == blog.author %}
+                <div dir="rtl" class="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200 flex items-center gap-4">
+                    <p class="font-semibold text-gray-700">أدوات المالك:</p>
+                    <a href="{% url 'blog_update' blog.pk %}" class="text-sm font-medium text-blue-600 hover:underline">تعديل</a>
+                    <a href="{% url 'blog_update' blog.pk %}" classs="text-sm font-medium text-red-600 hover:underline">حذف</a>
+                </div>
+                {% endif %}
             <div class="content">
                 <div>
                     <img src="{{ blog.img.url}}" class="w-full h-[240px] md:h-[450px] object-cover rounded-lg" alt="blog image">
@@ -31,9 +79,13 @@
                 <h1 class="text-3xl font-bold py-5" dir="rtl">
                     {{blog.title|safe}}
                 </h1>
-                <p class="inline text-xl font-semibold" style="background-color: #F8DF66;">
-                    {{blog.author.first_name}} {{blog.author.last_name}}
-                </p>
+                    <p class="inline text-xl font-semibold bg-yellow-200 hover:bg-yellow-300">
+                    <span class="font-semibold text-primary-600 hover:underline text-lg m-2">
+                        <a href="/writer/{{ blog.author.id }}">
+                        الكاتب: {{blog.author.first_name}} {{blog.author.last_name}}
+                        </a>
+                    </span>
+                    </p>
                 <div class="h-0.5 bg-black w-full mt-5"></div>
 
                 <div class="mt-4 text-lg bg-[#EFEDE8] p-3 rounded-lg blog-content">

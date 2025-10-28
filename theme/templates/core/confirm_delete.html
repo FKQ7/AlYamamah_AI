@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto px-4 min-h-[60vh] flex items-center justify-center">
+    <div class="w-full max-w-lg bg-white p-8 rounded-lg shadow-lg" dir="rtl">
+        
+        <h1 class="text-3xl font-bold text-gray-800 mb-4 font-sans">تأكيد الحذف</h1>
+        
+        <p class="text-lg text-gray-600 mb-6">
+            هل أنت متأكد أنك تريد حذف هذا المنشور؟
+            <br>
+            <strong class="font-semibold text-red-600">"{{ object.title|default:post_title }}"</strong>
+        </p>
+        
+        <p class="text-gray-500 mb-8">لا يمكن التراجع عن هذا الإجراء.</p>
+
+        <form method="post" class="flex justify-end gap-4">
+            {% csrf_token %}
+            
+            <!-- Cancel Button -->
+            <a href="{{ request.META.HTTP_REFERER|default:'/' }}" class="px-6 py-3 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition duration-300">
+                إلغاء
+            </a>
+
+            <!-- Delete Button -->
+            <button type="submit" class="px-6 py-3 bg-red-600 text-white rounded-md hover:bg-red-700 transition duration-300">
+                نعم، قم بالحذف
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock content %}
+

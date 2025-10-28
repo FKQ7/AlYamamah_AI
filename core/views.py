@@ -2,20 +2,19 @@ import re
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import auth, messages
 from django.contrib.auth import authenticate, login as auth_login
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.utils.html import strip_tags
 from django.utils import timezone
-from django.views.generic import CreateView
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, UpdateView, DeleteView
 import bleach
 
-from .models import News, Blogs, Event, StudentClub
+from .models import News, Blogs, Event, StudentClub, UserProfile
 from .forms import BlogForm, NewsForm
 
 
-# ===============================================
-# HELPER FUNCTIONS
-# ===============================================
+# HELPER FUNCTIONS========================
 def _get_plain_text_preview(html_content):
     """
     Strips all HTML tags from content to create a plain-text preview.
@@ -30,9 +29,7 @@ def _get_plain_text_preview(html_content):
     text = re.sub(r'(&nbsp;|\s)+', ' ', text).strip()
     return text
 
-# ===============================================
 # CORE & CLUB VIEWS
-# ===============================================
 def index(request):
     news = News.objects.filter(is_approved=True).select_related('author', 'club').order_by('-date_start')[:3]
     blogs = Blogs.objects.filter(is_approved=True).select_related('author', 'club').order_by('-date')[:2]
@@ -85,7 +82,6 @@ def club_detail(request, club_id):
         is_approved=True
     ).select_related('author', 'club').order_by('-date')
 
-    # Create previews
     for item in related_news:
         item.content_preview = _get_plain_text_preview(item.content)
     for blog in related_blogs:
@@ -99,15 +95,8 @@ def club_detail(request, club_id):
     return render(request, 'clubs/club_detail.html', context)
 
 
-# ===============================================
 # WRITER PROFILE VIEW
-# ===============================================
 def writer_profile(request, user_id):
-    """
-    Displays a profile page for a specific writer, showing their
-    info and all their approved posts.
-    """
-    # Use select_related('userprofile') to fetch the profile in the same query
     writer = get_object_or_404(User.objects.select_related('userprofile'), id=user_id)
     
     blogs = Blogs.objects.filter(
@@ -120,10 +109,8 @@ def writer_profile(request, user_id):
         is_approved=True
     ).select_related('club').order_by('-date_start')
 
-    # Explicitly query for the clubs the writer is a member of
     writer_clubs = StudentClub.objects.filter(members=writer)
 
-    # Create previews
     for item in news:
         item.content_preview = _get_plain_text_preview(item.content)
     for blog in blogs:
@@ -138,9 +125,7 @@ def writer_profile(request, user_id):
     return render(request, 'writers/writer_details.html', context)
 
 
-# ===============================================
 # BLOG & NEWS VIEWS
-# ===============================================
 def news(request):
     all_news = News.objects.filter(is_approved=True).select_related('author', 'club').order_by('-date_start')
     for item in all_news:
@@ -186,10 +171,9 @@ def details_news(request, id):
     return render(request, 'news/details.html', context)
 
 
-# ===============================================
+
 # AUTHENTICATION & POST CREATION
-# ===============================================
-def login_view(request): # Renamed from login
+def login_view(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
@@ -205,16 +189,23 @@ def login_view(request): # Renamed from login
 
     return render(request, 'core/login.html')
 
-def logout_view(request): # Renamed from logout
+def logout_view(request):
     auth.logout(request)
     return redirect('index')
+
+class AuthorRequiredMixin(UserPassesTestMixin):
+    """Ensures that the logged-in user is the author of the post."""
+    def test_func(self):
+        post = self.get_object()
+        return self.request.user == post.author
+
 
 class BlogCreateView(PermissionRequiredMixin, CreateView):
     model = Blogs
     form_class = BlogForm
-    template_name = 'blog/create.html'
-    success_url = '/' 
-    login_url = 'login'
+    template_name = 'blog/blog_form.html'
+    success_url = reverse_lazy('blog')
+    login_url = '/login/'
     permission_required = 'core.add_blogs' 
     raise_exception = True 
 
@@ -225,14 +216,15 @@ class BlogCreateView(PermissionRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.author = self.request.user
+        messages.success(self.request, "Your blog post has been submitted for approval.")
         return super().form_valid(form)
 
 class NewsCreateView(PermissionRequiredMixin, CreateView):
     model = News
     form_class = NewsForm
-    template_name = 'news/create.html'
-    success_url = '/' 
-    login_url = 'login'
+    template_name = 'news/news_form.html'
+    success_url = reverse_lazy('news')
+    login_url = '/login/'
     permission_required = 'core.add_news'
     raise_exception = True 
 
@@ -243,5 +235,70 @@ class NewsCreateView(PermissionRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.author = self.request.user
+        messages.success(self.request, "Your news post has been submitted for approval.")
         return super().form_valid(form)
+
+
+class BlogUpdateView(AuthorRequiredMixin, UpdateView):
+    model = Blogs
+    form_class = BlogForm
+    template_name = 'blog/blog_form.html'
+    success_url = reverse_lazy('blog')
+    login_url = '/login/'
+    permission_required = 'core.change_blogs'
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        form.instance.is_approved = False
+        messages.success(self.request, "Your post has been updated and sent for re-approval.")
+        return super().form_valid(form)
+
+class NewsUpdateView(AuthorRequiredMixin, UpdateView):
+    model = News
+    form_class = NewsForm
+    template_name = 'news/news_form.html'
+    success_url = reverse_lazy('news')
+    login_url = '/login/'
+    permission_required = 'core.change_news'
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        form.instance.is_approved = False
+        messages.success(self.request, "Your post has been updated and sent for re-approval.")
+        return super().form_valid(form)
+
+
+# --- New Delete Views ---
+
+class BlogDeleteView(AuthorRequiredMixin, DeleteView):
+    model = Blogs
+    template_name = 'core/confirm_delete.html'
+    success_url = reverse_lazy('blog')
+    login_url = '/login/'
+    permission_required = 'core.delete_blogs'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['post_title'] = self.object.title
+        return context
+
+class NewsDeleteView(AuthorRequiredMixin, DeleteView):
+    model = News
+    template_name = 'core/confirm_delete.html'
+    success_url = reverse_lazy('news')
+    login_url = '/login/'
+    permission_required = 'core.delete_news'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['post_title'] = self.object.title
+        return context
 

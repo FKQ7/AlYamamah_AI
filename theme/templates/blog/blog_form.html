@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load form_tags %}
+
+{% block content %}
+<div class="container mx-auto px-4 min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-lg lg:max-w-4xl bg-white p-8 rounded-lg shadow-lg" dir="rtl">
+        
+        
+        <h1 class="text-3xl font-bold text-gray-800 mb-6 font-sans">
+            {% if object %}
+                تعديل المدونة
+            {% else %}
+                إنشاء مدونة جديدة
+            {% endif %}
+        </h1>
+        
+        <form method="post" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+            {{ form.media }}
+            
+            
+            <div class="space-y-2">
+                <label for="{{ form.title.id_for_label }}" class="block text-gray-700 font-medium">عنوان المدونة</label>
+                {{ form.title|add_class:"w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500" }}
+                {% if form.title.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.title.errors }}</p>
+                {% endif %}
+            </div>
+
+            
+            {% if form.club %}
+            <div class="space-y-2">
+                <label for="{{ form.club.id_for_label }}" class="block text-gray-700 font-medium">النادي (اختياري)</label>
+                {{ form.club|add_class:"w-full p-3 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-orange-500" }}
+                <p class="text-sm text-gray-500">سيظهر اسم النادي بجانب اسمك. إذا لم تختر، سيتم نشره كمنشور فردي.</p>
+                {% if form.club.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.club.errors }}</p>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            
+            <div class="space-y-2">
+                <label for="{{ form.img.id_for_label }}" class="block text-gray-700 font-medium">صورة مميزة</label>
+                {{ form.img|add_class:"w-full file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100 border border-gray-300 rounded-md text-gray-500" }}
+                {% if object.img %}
+                    <p class="text-sm text-gray-500 mt-1">الصورة الحالية: <a href="{{ object.img.url }}" target="_blank" class="text-orange-600 hover:underline">{{ object.img.name|truncatechars:30 }}</a></p>
+                {% endif %}
+                {% if form.img.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.img.errors }}</p>
+                {% endif %}
+            </div>
+
+            
+            <div class="space-y-2">
+                <label for="{{ form.content.id_for_label }}" class="block text-gray-700 font-medium">المحتوى</label>
+                {{ form.content }}
+                {% if form.content.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.content.errors }}</p>
+                {% endif %}
+            </div>
+
+            
+            <div class="flex justify-end">
+                <button type="submit" class="px-6 py-3 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition duration-300">
+                    {% if object %}
+                        تحديث وإرسال للموافقة
+                    {% else %}
+                        نشر المدونة
+                    {% endif %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}
+

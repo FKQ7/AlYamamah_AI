@@ -24,7 +24,7 @@ DEFAULT_CHARSET = 'utf-8'
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'idjsafjkdshfuidshf-90321894293014'
+SECRET_KEY = 'idjsafjkdshfuidshf-90321894293014' # THIS KEY WILL BE CHANGED IN PRODUCTION, IT'S JUST FOR DEV
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -142,7 +142,6 @@ LOGIN_REDIRECT_URL = '/login'
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 import os
 STATIC_URL = 'static/'
-# Media settings for uploaded files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
@@ -154,7 +153,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'themes/static'),
 ]
 STATIC_URL = '/static/'
-# if you are using pathlib Path
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

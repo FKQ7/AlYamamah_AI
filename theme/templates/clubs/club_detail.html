@@ -4,7 +4,6 @@
 {% block content %}
 <section dir="rtl" class="container mx-auto py-12 px-4 min-h-screen">
   
-  <!-- =========== Club Header =========== -->
   <div class="mb-12 relative">
     <!-- Header Image -->
     <div class="w-full h-64 md:h-96 rounded-2xl overflow-hidden mb-6 shadow-lg bg-gray-200">
@@ -40,7 +39,7 @@
   </div>
 
   <!-- Club Name & Description (shifted down) -->
-  <div class="pt-20 md:pt-16 text-center md:text-right md:pr-72"> <!-- Added padding-right to avoid logo overlap on md screens -->
+  <div class="pt-20 md:pt-16 text-center md:text-right md:pr-72">
     <h1 class="text-3xl md:text-5xl font-bold text-gray-800 mb-4">
       {{ club.name }}
     </h1>
@@ -50,7 +49,6 @@
     </div>
   </div>
 
-  <!-- =========== Club Members Section =========== -->
   <div class="container mx-auto mt-16 border-t-4 border-orange-400 pt-12">
     <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-8 text-center md:text-right">
       كتّاب النادي 
@@ -58,7 +56,6 @@
     <div dir="ltr" class="flex flex-wrap justify-center md:justify-end gap-6">
       
       {% for member in club.members.all %}
-        <!-- Make the whole card clickable -->
         <a href="{% url 'writer_profile' member.id %}" class="flex flex-col items-center p-4 bg-white rounded-lg shadow-lg w-40 transition-transform duration-300 hover:scale-105">
           <img class="w-24 h-24 rounded-full mb-3 object-cover border-2 border-orange-200" 
                src="https://placehold.co/100x100/f97316/FFFFFF/png?text={{ member.first_name.0|default:'' }}{{ member.last_name.0|default:'' }}" 
@@ -74,7 +71,6 @@
   </div>
 
 
-  <!-- =========== Related Posts Section =========== -->
   <div class="News-blogs container mx-auto mt-16 border-t-4 border-orange-400 pt-8">
     <div class_ ="py-8 lg:mx-auto lg:max-w-screen-2xl text-center lg:py-12 lg:px-12">
       <h1 class="text-center mt-10 mb-4 md:mt-10 text-5xl font-bold">
@@ -89,7 +85,7 @@
         </div>
       </div>
 
-      <!--CARDS SECTION!!!!!-->
+      
       <div class="flex flex-col px-2 xl:flex-row md:container md:mx-auto md:px-16 xl:px-0" dir="rtl">
             
         <!-- News Column -->
@@ -100,7 +96,7 @@
           
           <!-- Loop through related_news -->
           {% for news_item in related_news %}
-          <div class="block w-full"> <!-- Changed <a> to <div> -->
+          <div class="block w-full"> 
             <div class="w-full lg:h-[230px] rounded-md " dir="rtl">
               <div class="flex w-full h-full p-3 border-[2px] hover:bg-[#eeede8] border-primary-400 text-text rounded-lg xl:rounded-xl mt-2 shadow-md" >
                 
@@ -129,7 +125,6 @@
                   </div>
                   <div classs="flex justify-between items-center">
                       <div class="flex items-center">
-                        <img class="rounded-full w-[24px] h-[24px] ml-2" src="https://placehold.co/300x300" alt="صورة الكاتب">
                         <!-- LINK TO WRITER PROFILE -->
                         <a href="{% url 'writer_profile' news_item.author.id %}" class="text-right text-sm sm:text-md text-primary-500 hover:underline">
                           {{ news_item.author.first_name }} {{ news_item.author.last_name }}
@@ -156,7 +151,7 @@
           
           <!-- Loop through related_blogs -->
           {% for blog in related_blogs %}
-          <div class="block hover:bg-[#eeede8]"> <!-- Changed <a> to <div> -->
+          <div class="block hover:bg-[#eeede8]">
             <div class="w-full border-[3px] border-primary-400 text-text h-full rounded-md xl:rounded-xl mt-2 mb-4">
               <div class="w-full h-full p-5 border-primary-400 text-text rounded-lg shadow-md lg:flex">
                 
@@ -185,7 +180,6 @@
                   </div>
                    <div classs="flex justify-between items-center">
                       <div class="flex items-center mt-4">
-                        <img class="rounded-full w-[35px] h-[35px] ml-2" src="https://placehold.co/300x300" alt="صورة الكاتب">
                         <!-- LINK TO WRITER PROFILE -->
                         <a href="{% url 'writer_profile' blog.author.id %}" class="text-right text-md md:text-lg text-primary-500 hover:underline">
                           {{ blog.author.first_name }} {{ blog.author.last_name }}
